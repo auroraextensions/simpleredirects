@@ -1,0 +1,27 @@
+{
+  "name": "auroraextensions/simpleredirects",
+  "description": "URL redirect management for Magento.",
+  "type": "magento2-module",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Nickolas Burr",
+      "email": "nickolasburr@auroraextensions.com"
+    }
+  ],
+  "support": {
+    "email": "support@auroraextensions.com"
+  },
+  "require": {
+    "php": "~7.1.0|~7.2.0|~7.3.0",
+    "magento/framework": "102.*.*"
+  },
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "AuroraExtensions\\SimpleRedirects\\": ""
+    }
+  }
+}
