@@ -14,7 +14,8 @@
   },
   "require": {
     "php": "~7.1.0|~7.2.0|~7.3.0",
-    "magento/framework": "102.*.*"
+    "magento/framework": "102.*.*",
+    "magento/module-store": "101.*.*"
   },
   "autoload": {
     "files": [
