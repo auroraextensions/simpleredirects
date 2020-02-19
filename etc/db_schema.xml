@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * db_schema.xml
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License, which
+ * is bundled with this package in the file LICENSE.txt.
+ *
+ * It is also available on the Internet at the following URL:
+ * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
+ *
+ * @package       AuroraExtensions_SimpleRedirects
+ * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
+ * @license       MIT License
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="simpleredirects_rule" resource="default" engine="innodb" comment="Simple Redirects Rules">
+        <column xsi:type="int" name="rule_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Rule ID"/>
+        <column xsi:type="int" name="store_id" padding="10" unsigned="true" nullable="false" default="0"
+                comment="Store ID"/>
+        <column xsi:type="varchar" name="pattern" nullable="false" length="256" comment="Pattern"/>
+        <column xsi:type="varchar" name="target" nullable="false" length="256" comment="Target"/>
+        <column xsi:type="smallint" name="redirect_type" padding="5" unsigned="true" nullable="false" default="301"
+                comment="Redirect Type"/>
+        <column xsi:type="smallint" name="is_active" padding="5" unsigned="true" nullable="false" default="1"
+                comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="rule_id"/>
+        </constraint>
+        <index referenceId="SIMPLEREDIRECTS_RULE_REDIRECT_TYPE" indexType="btree">
+            <column name="redirect_type"/>
+        </index>
+    </table>
+</schema>
