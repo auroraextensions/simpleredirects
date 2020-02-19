@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * di.xml
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License, which
+ * is bundled with this package in the file LICENSE.txt.
+ *
+ * It is also available on the Internet at the following URL:
+ * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
+ *
+ * @package       AuroraExtensions_SimpleRedirects
+ * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
+ * @license       MIT License
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="AuroraExtensions\SimpleRedirects\Csi\Config\ModuleConfigInterface"
+                type="AuroraExtensions\SimpleRedirects\Model\Config\ModuleConfig"/>
+
+    <type name="AuroraExtensions\SimpleRedirects\Csi\Config\ModuleConfigInterface">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="redirect_types" xsi:type="array">
+                    <item name="301" xsi:type="string">301 [Permanent]</item>
+                    <item name="302" xsi:type="string">302 [Temporary]</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="AuroraExtensions\SimpleRedirects\Ui\Component\Control\Rule\SaveButton"
+                 type="AuroraExtensions\SimpleRedirects\Ui\Component\Control\SaveButton">
+        <arguments>
+            <argument name="components" xsi:type="array">
+                <item name="simpleRedirectsAjaxSaveRedirect" xsi:type="array"></item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectTypes"
+                 type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
+        <arguments>
+            <argument name="key" xsi:type="string">redirect_types</argument>
+            <argument name="flip" xsi:type="boolean">true</argument>
+        </arguments>
+    </virtualType>
+</config>
