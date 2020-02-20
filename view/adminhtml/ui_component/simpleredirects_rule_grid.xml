@@ -24,6 +24,14 @@
         </item>
     </argument>
     <settings>
+        <buttons>
+            <button name="add">
+                <url path="simpleredirects/rule/create"/>
+                <class>primary</class>
+                <label translate="true">Create Rule</label>
+                <aclResource>AuroraExtensions_SimpleRedirects::create</aclResource>
+            </button>
+        </buttons>
         <deps>
             <dep>simpleredirects_rule_grid.simpleredirects_rule_grid_data_source</dep>
         </deps>
@@ -59,6 +67,13 @@
                     <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options"/>
                 </settings>
             </filterSelect>
+            <filterSelect name="is_active" provider="${ $.parentName }">
+                <settings>
+                    <dataScope>is_active</dataScope>
+                    <label translate="true">Active</label>
+                    <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                </settings>
+            </filterSelect>
         </filters>
         <paging name="listing_paging"/>
     </listingToolbar>
@@ -89,8 +104,8 @@
         </column>
         <column name="rule_type" component="Magento_Ui/js/grid/columns/select" sortOrder="20">
             <settings>
-                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
-                <filter>text</filter>
+                <dataType>select</dataType>
+                <filter>select</filter>
                 <label translate="true">Rule Type</label>
                 <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleTypes"/>
             </settings>
