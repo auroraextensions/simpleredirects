@@ -18,6 +18,12 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="AuroraExtensions\SimpleRedirects\Api\RuleRepositoryInterface"
+                type="AuroraExtensions\SimpleRedirects\Model\Repository\RuleRepository"/>
+    <preference for="AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface"
+                type="AuroraExtensions\SimpleRedirects\Model\Data\Rule"/>
+    <preference for="AuroraExtensions\SimpleRedirects\Api\Data\RuleSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
     <preference for="AuroraExtensions\SimpleRedirects\Csi\Config\ModuleConfigInterface"
                 type="AuroraExtensions\SimpleRedirects\Model\Config\ModuleConfig"/>
 
@@ -27,6 +33,11 @@
                 <item name="redirect_types" xsi:type="array">
                     <item name="301" xsi:type="string">301 [Permanent]</item>
                     <item name="302" xsi:type="string">302 [Temporary]</item>
+                </item>
+                <item name="rule_types" xsi:type="array">
+                    <item name="domain" xsi:type="string">Domain</item>
+                    <item name="path" xsi:type="string">Path</item>
+                    <item name="query" xsi:type="string">Query Parameter</item>
                 </item>
             </argument>
         </arguments>
@@ -43,7 +54,12 @@
                  type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
         <arguments>
             <argument name="key" xsi:type="string">redirect_types</argument>
-            <argument name="flip" xsi:type="boolean">true</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleTypes"
+                 type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
+        <arguments>
+            <argument name="key" xsi:type="string">rule_types</argument>
         </arguments>
     </virtualType>
 </config>
