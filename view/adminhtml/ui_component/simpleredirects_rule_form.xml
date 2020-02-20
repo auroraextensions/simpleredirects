@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * simpleredirects_rule_form.xml
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License, which
+ * is bundled with this package in the file LICENSE.txt.
+ *
+ * It is also available on the Internet at the following URL:
+ * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
+ *
+ * @package       AuroraExtensions_SimpleRedirects
+ * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
+ * @license       MIT License
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">simpleredirects_rule_form.simpleredirects_rule_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string">Rule Details</item>
+        <item name="reverseMetadataMerge" xsi:type="boolean">true</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save" class="AuroraExtensions\SimpleRedirects\Ui\Component\Control\Rule\SaveButton"/>
+        </buttons>
+        <ajaxSave>true</ajaxSave>
+        <ajaxSaveType>simple</ajaxSaveType>
+        <dataScope>data</dataScope>
+        <namespace>simpleredirects_rule_form</namespace>
+        <deps>
+            <dep>simpleredirects_rule_form.simpleredirects_rule_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="simpleredirects_rule_form_data_source" component="Magento_Ui/js/form/provider">
+        <settings>
+            <filterUrlParams>
+                <param name="rule_id">*</param>
+            </filterUrlParams>
+            <submitUrl path="simpleredirects/rule/:action"/>
+        </settings>
+        <dataProvider class="AuroraExtensions\SimpleRedirects\Ui\DataProvider\Form\Rule\DataProvider"
+                      name="simpleredirects_rule_form_data_source">
+            <settings>
+                <primaryFieldName>rule_id</primaryFieldName>
+                <requestFieldName>rule_id</requestFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="simpleredirects">
+        <settings>
+            <collapsible>false</collapsible>
+            <label/>
+        </settings>
+        <field name="rule_id" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="rule_type" formElement="select">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Rule Type</label>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleTypes"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="redirect_type" formElement="select">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Redirect Type</label>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectTypes"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="pattern" formElement="input">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Pattern</label>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="target" formElement="input">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Target</label>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="is_active" formElement="select">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Active</label>
+                <required>true</required>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Config\Model\Config\Source\Yesno"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+</form>
