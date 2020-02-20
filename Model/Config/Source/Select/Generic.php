@@ -39,10 +39,13 @@ class Generic implements ArrayInterface
     ) {
         /** @var array $data */
         $data = $moduleConfig->getContainer()
-            ->getData() ?? [];
+            ->getData($key) ?? [];
+
+        /** @var array $sort */
+        $sort = $flip ? array_flip($data) : $data;
 
         array_walk(
-            $flip ? array_flip($data) : $data,
+            $sort,
             [
                 $this,
                 'setOption'
