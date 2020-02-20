@@ -35,7 +35,7 @@ class Generic implements ArrayInterface
     public function __construct(
         ModuleConfigInterface $moduleConfig,
         string $key,
-        bool $flip = false
+        bool $flip = true
     ) {
         /** @var array $data */
         $data = $moduleConfig->getContainer()
