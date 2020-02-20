@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * menu.xml
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License, which
+ * is bundled with this package in the file LICENSE.txt.
+ *
+ * It is also available on the Internet at the following URL:
+ * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
+ *
+ * @package       AuroraExtensions_SimpleRedirects
+ * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
+ * @license       MIT License
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="AuroraExtensions_SimpleRedirects::simpleredirects"
+             title="Simple Redirects"
+             translate="title"
+             module="AuroraExtensions_SimpleRedirects"
+             resource="AuroraExtensions_SimpleRedirects::simpleredirects"
+             parent="Magento_Backend::marketing_seo"
+             action="simpleredirects/rule/index"
+             sortOrder="25"/>
+    </menu>
+</config>
