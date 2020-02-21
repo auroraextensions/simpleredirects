@@ -1,0 +1,116 @@
+<?php
+/**
+ * details.phtml
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License, which
+ * is bundled with this package in the file LICENSE.txt.
+ *
+ * It is also available on the Internet at the following URL:
+ * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
+ *
+ * @package       AuroraExtensions_SimpleRedirects
+ * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
+ * @license       MIT License
+ */
+
+/**
+ * @see AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface
+ * @see AuroraExtensions\SimpleRedirects\Model\ViewModel\Rule\View
+ * @see Magento\Framework\View\Element\Template
+ */
+
+/** @var Template $block */
+/** @var View $viewModel */
+$viewModel = $block->getViewModel();
+
+/** @var RuleInterface $rule */
+$rule = $viewModel->getRule();
+?>
+<section class="admin__page-section simpleredirects-rule-view">
+    <div class="admin__page-section-title">
+        <span class="title"><?= $block->escapeHtml(__('View Rule Details')) ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item rule-information">
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary rule-information-table">
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Created')) ?></th>
+                        <td><?= $block->escapeHtml($rule->getCreatedAt()) ?></td>
+                    </tr>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Updated')) ?></th>
+                        <td><?= $block->escapeHtml($rule->getUpdatedAt()) ?></td>
+                    </tr>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Rule Type')) ?></th>
+                        <td>
+                            <span id="rule_type">
+                                <?= $block->escapeHtml(
+                                    __(
+                                        '%1',
+                                        $viewModel->getFrontLabel('rule_types', $rule->getRuleType())
+                                    )
+                                ) ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Redirect Type')) ?></th>
+                        <td>
+                            <span id="redirect_type">
+                                <?= $block->escapeHtml(
+                                    __(
+                                        '%1',
+                                        $viewModel->getFrontLabel('redirect_types', $rule->getRedirectType())
+                                    )
+                                ) ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Pattern')) ?></th>
+                        <td>
+                            <span id="rule_pattern">
+                                <?= $block->escapeHtml(
+                                    __(
+                                        '%1',
+                                        $rule->getPattern()
+                                    )
+                                ) ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Target')) ?></th>
+                        <td>
+                            <span id="rule_target">
+                                <?= $block->escapeHtml(
+                                    __(
+                                        '%1',
+                                        $rule->getTarget()
+                                    )
+                                ) ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Active')) ?></th>
+                        <td>
+                            <span id="rule_is_active">
+                                <?= $block->escapeHtml(
+                                    __(
+                                        '%1',
+                                        $rule->getIsActive()
+                                    )
+                                ) ?>
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
