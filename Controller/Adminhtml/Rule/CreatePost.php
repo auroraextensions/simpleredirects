@@ -82,7 +82,7 @@ class CreatePost extends Action implements HttpPostActionInterface
      * @param EventManagerInterface $eventManager
      * @param ExceptionFactory $exceptionFactory
      * @param FormKeyValidator $formKeyValidator
-     * @param ModuleConfig $moduleConfig
+     * @param ModuleConfigInterface $moduleConfig
      * @param ResultJsonFactory $resultJsonFactory
      * @param Json $serializer
      * @param RuleInterfaceFactory $ruleFactory
@@ -96,7 +96,7 @@ class CreatePost extends Action implements HttpPostActionInterface
         EventManagerInterface $eventManager,
         ExceptionFactory $exceptionFactory,
         FormKeyValidator $formKeyValidator,
-        ModuleConfig $moduleConfig,
+        ModuleConfigInterface $moduleConfig,
         ResultJsonFactory $resultJsonFactory,
         Json $serializer,
         RuleInterfaceFactory $ruleFactory,
