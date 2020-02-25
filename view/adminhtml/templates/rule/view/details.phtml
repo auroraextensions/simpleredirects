@@ -51,7 +51,7 @@ $rule = $viewModel->getRule();
                                 <?= $block->escapeHtml(
                                     __(
                                         '%1',
-                                        $viewModel->getFrontLabel('rule_types', $rule->getRuleType())
+                                        $viewModel->getLabel('rule_types', $rule->getRuleType())
                                     )
                                 ) ?>
                             </span>
@@ -64,7 +64,7 @@ $rule = $viewModel->getRule();
                                 <?= $block->escapeHtml(
                                     __(
                                         '%1',
-                                        $viewModel->getFrontLabel('redirect_types', $rule->getRedirectType())
+                                        $viewModel->getLabel('redirect_types', $rule->getRedirectType())
                                     )
                                 ) ?>
                             </span>
