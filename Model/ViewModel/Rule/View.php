@@ -21,6 +21,7 @@ namespace AuroraExtensions\SimpleRedirects\Model\ViewModel\Rule;
 use AuroraExtensions\SimpleRedirects\{
     Api\Data\RuleInterface,
     Api\RuleRepositoryInterface,
+    Component\Config\ModuleConfigTrait,
     Csi\Config\ModuleConfigInterface,
     Exception\ExceptionFactory
 };
@@ -86,7 +87,7 @@ class View implements ArgumentInterface
      * @param string $key
      * @param string
      */
-    public function getFrontLabel(string $type, string $key): string
+    public function getLabel(string $type, string $key): string
     {
         /** @var array $labels */
         $labels = $this->moduleConfig
@@ -94,5 +95,26 @@ class View implements ArgumentInterface
             ->getData($type) ?? [];
 
         return $labels[$key] ?? $key;
+    }
+
+    /**
+     * @return RuleInterface|null
+     */
+    public function getRule(): ?RuleInterface
+    {
+        /** @var int|null $ruleId */
+        $ruleId = $this->request
+            ->getParam('rule_id');
+
+        if ($ruleId !== null) {
+            try {
+                return $this->ruleRepository->getById((int) $ruleId);
+            } catch (NoSuchEntityException | LocalizedException $e) {
+                $this->messageManager
+                    ->addErrorMessage($e->getMessage());
+            }
+        }
+
+        return null;
     }
 }
