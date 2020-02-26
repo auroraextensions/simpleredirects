@@ -50,13 +50,13 @@ $rule = $viewModel->getRule();
                         </td>
                     </tr>
                     <tr>
-                        <th><?= $block->escapeHtml(__('Redirect Type')) ?></th>
+                        <th><?= $block->escapeHtml(__('Match Type')) ?></th>
                         <td>
-                            <span id="redirect_type">
+                            <span id="match_type">
                                 <?= $block->escapeHtml(
                                     __(
                                         '%1',
-                                        $viewModel->getLabel('redirect_types', $rule->getRedirectType())
+                                        $viewModel->getLabel('match_types', $rule->getMatchType())
                                     )
                                 ) ?>
                             </span>
@@ -83,6 +83,19 @@ $rule = $viewModel->getRule();
                                     __(
                                         '%1',
                                         $rule->getTarget()
+                                    )
+                                ) ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Redirect Type')) ?></th>
+                        <td>
+                            <span id="redirect_type">
+                                <?= $block->escapeHtml(
+                                    __(
+                                        '%1',
+                                        $viewModel->getLabel('redirect_types', $rule->getRedirectType())
                                     )
                                 ) ?>
                             </span>
