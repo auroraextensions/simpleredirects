@@ -37,14 +37,6 @@ $rule = $viewModel->getRule();
             <div class="admin__page-section-item-content">
                 <table class="admin__table-secondary rule-information-table">
                     <tr>
-                        <th><?= $block->escapeHtml(__('Created')) ?></th>
-                        <td><?= $block->escapeHtml($rule->getCreatedAt()) ?></td>
-                    </tr>
-                    <tr>
-                        <th><?= $block->escapeHtml(__('Updated')) ?></th>
-                        <td><?= $block->escapeHtml($rule->getUpdatedAt()) ?></td>
-                    </tr>
-                    <tr>
                         <th><?= $block->escapeHtml(__('Rule Type')) ?></th>
                         <td>
                             <span id="rule_type">
@@ -103,11 +95,19 @@ $rule = $viewModel->getRule();
                                 <?= $block->escapeHtml(
                                     __(
                                         '%1',
-                                        $rule->getIsActive()
+                                        $rule->getIsActive() ? 'Yes' : 'No'
                                     )
                                 ) ?>
                             </span>
                         </td>
+                    </tr>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Created')) ?></th>
+                        <td><?= $block->escapeHtml($rule->getCreatedAt()) ?></td>
+                    </tr>
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Updated')) ?></th>
+                        <td><?= $block->escapeHtml($rule->getUpdatedAt()) ?></td>
                     </tr>
                 </table>
             </div>
