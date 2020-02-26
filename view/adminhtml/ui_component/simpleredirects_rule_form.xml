@@ -81,10 +81,10 @@
                 </select>
             </formElements>
         </field>
-        <field name="redirect_type" formElement="select">
+        <field name="match_type" formElement="select">
             <settings>
                 <dataType>string</dataType>
-                <label translate="true">Redirect Type</label>
+                <label translate="true">Match Type</label>
                 <required>true</required>
                 <validation>
                     <rule name="required-entry" xsi:type="boolean">true</rule>
@@ -93,7 +93,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectTypes"/>
+                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\MatchTypes"/>
                     </settings>
                 </select>
             </formElements>
@@ -117,6 +117,23 @@
                     <rule name="required-entry" xsi:type="boolean">true</rule>
                 </validation>
             </settings>
+        </field>
+        <field name="redirect_type" formElement="select">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Redirect Type</label>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectTypes"/>
+                    </settings>
+                </select>
+            </formElements>
         </field>
         <field name="is_active" formElement="select">
             <settings>
