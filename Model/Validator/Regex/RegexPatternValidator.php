@@ -41,6 +41,13 @@ class RegexPatternValidator
         }
     }
 
+    /**
+     * @param int $severity
+     * @param string $message
+     * @param string $file
+     * @param int $line
+     * @return void
+     */
     private function onError(
         int $severity,
         string $message,
