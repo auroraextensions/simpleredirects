@@ -59,10 +59,10 @@ interface RuleInterface
     public function getRedirectType(): int;
 
     /**
-     * @param int $type
+     * @param int $redirectType
      * @return \AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface
      */
-    public function setRedirectType(int $type): RuleInterface;
+    public function setRedirectType(int $redirectType): RuleInterface;
 
     /**
      * @return string
@@ -70,10 +70,21 @@ interface RuleInterface
     public function getRuleType(): string;
 
     /**
-     * @param string $type
+     * @param string $ruleType
      * @return \AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface
      */
-    public function setRuleType(string $type): RuleInterface;
+    public function setRuleType(string $ruleType): RuleInterface;
+
+    /**
+     * @return string
+     */
+    public function getMatchType(): string;
+
+    /**
+     * @param string $matchType
+     * @return \AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface
+     */
+    public function setMatchType(string $matchType): RuleInterface;
 
     /**
      * @return string
