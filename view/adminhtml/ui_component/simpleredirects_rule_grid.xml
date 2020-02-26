@@ -110,12 +110,12 @@
                 <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleTypes"/>
             </settings>
         </column>
-        <column name="redirect_type" component="Magento_Ui/js/grid/columns/select" sortOrder="30">
+        <column name="match_type" component="Magento_Ui/js/grid/columns/select" sortOrder="30">
             <settings>
                 <dataType>select</dataType>
                 <filter>select</filter>
-                <label translate="true">Redirect Type</label>
-                <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectTypes"/>
+                <label translate="true">Match Type</label>
+                <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\MatchTypes"/>
             </settings>
         </column>
         <column name="pattern" sortOrder="40">
@@ -132,7 +132,15 @@
                 <label translate="true">Target</label>
             </settings>
         </column>
-        <column name="is_active" component="Magento_Ui/js/grid/columns/select" sortOrder="60">
+        <column name="redirect_type" component="Magento_Ui/js/grid/columns/select" sortOrder="60">
+            <settings>
+                <dataType>select</dataType>
+                <filter>select</filter>
+                <label translate="true">Redirect Type</label>
+                <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectTypes"/>
+            </settings>
+        </column>
+        <column name="is_active" component="Magento_Ui/js/grid/columns/select" sortOrder="70">
             <settings>
                 <dataType>select</dataType>
                 <filter>select</filter>

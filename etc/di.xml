@@ -35,9 +35,14 @@
                     <item name="302" xsi:type="string">302 [Temporary]</item>
                 </item>
                 <item name="rule_types" xsi:type="array">
-                    <item name="domain" xsi:type="string">Domain</item>
                     <item name="path" xsi:type="string">Path</item>
                     <item name="query" xsi:type="string">Query Parameter</item>
+                    <item name="domain" xsi:type="string">Domain</item>
+                </item>
+                <item name="match_types" xsi:type="array">
+                    <item name="equal" xsi:type="string">Is Equal To</item>
+                    <item name="not_equal" xsi:type="string">Is Not Equal To</item>
+                    <item name="contains" xsi:type="string">Contains</item>
                 </item>
             </argument>
         </arguments>
@@ -60,6 +65,12 @@
                  type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
         <arguments>
             <argument name="key" xsi:type="string">rule_types</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\MatchTypes"
+                 type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
+        <arguments>
+            <argument name="key" xsi:type="string">match_types</argument>
         </arguments>
     </virtualType>
 </config>

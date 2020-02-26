@@ -79,12 +79,12 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @param int $type
+     * @param int $redirectType
      * @return RuleInterface
      */
-    public function setRedirectType(int $type): RuleInterface
+    public function setRedirectType(int $redirectType): RuleInterface
     {
-        $this->setData('redirect_type', $type);
+        $this->setData('redirect_type', $redirectType);
         return $this;
     }
 
@@ -97,12 +97,30 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @param string $type
+     * @param string $ruleType
      * @return RuleInterface
      */
-    public function setRuleType(string $type): RuleInterface
+    public function setRuleType(string $ruleType): RuleInterface
     {
-        $this->setData('rule_type', $type);
+        $this->setData('rule_type', $ruleType);
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMatchType(): string
+    {
+        return $this->getData('match_type');
+    }
+
+    /**
+     * @param string $matchType
+     * @return RuleInterface
+     */
+    public function setMatchType(string $matchType): RuleInterface
+    {
+        $this->setData('match_type', $matchType);
         return $this;
     }
 
