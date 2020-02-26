@@ -39,6 +39,11 @@
                     <item name="path" xsi:type="string">Path</item>
                     <item name="query" xsi:type="string">Query Parameter</item>
                 </item>
+                <item name="match_types" xsi:type="array">
+                    <item name="equal" xsi:type="string">Is Equal To</item>
+                    <item name="not_equal" xsi:type="string">Is Not Equal To</item>
+                    <item name="contains" xsi:type="string">Contains</item>
+                </item>
             </argument>
         </arguments>
     </type>
