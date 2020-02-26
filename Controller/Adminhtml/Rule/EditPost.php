@@ -150,6 +150,12 @@ class EditPost extends Action implements HttpPostActionInterface
             ? $this->escaper->escapeHtml($ruleType)
             : null;
 
+        /** @var string|null $matchType */
+        $matchType = $request->getPostValue('match_type');
+        $matchType = $matchType !== null && !empty($matchType)
+            ? $this->escaper->escapeHtml($matchType)
+            : null;
+
         /** @var string|null $redirectType */
         $redirectType = $request->getPostValue('redirect_type');
         $redirectType = $redirectType !== null && !empty($redirectType)
@@ -185,6 +191,7 @@ class EditPost extends Action implements HttpPostActionInterface
                 $rule = $this->ruleRepository->getById($ruleId);
                 $rule->addData([
                     'rule_type' => $ruleType,
+                    'match_type' => $matchType,
                     'redirect_type' => $redirectType,
                     'pattern' => $pattern,
                     'target' => $target,
