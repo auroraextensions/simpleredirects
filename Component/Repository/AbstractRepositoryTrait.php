@@ -90,6 +90,7 @@ trait AbstractRepositoryTrait
             $this->addFilterGroupToCollection($group, $collection);
         }
 
+        /** @var SortOrder $sortOrder */
         foreach ((array) $criteria->getSortOrders() as $sortOrder) {
             /** @var string $field */
             $field = $sortOrder->getField();

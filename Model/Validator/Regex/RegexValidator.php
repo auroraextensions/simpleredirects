@@ -1,6 +1,6 @@
 <?php
 /**
- * RegexPatternValidator.php
+ * RegexValidator.php
  *
  * NOTICE OF LICENSE
  *
@@ -19,8 +19,9 @@ declare(strict_types=1);
 namespace AuroraExtensions\SimpleRedirects\Model\Validator\Regex;
 
 use ErrorException;
+use AuroraExtensions\SimpleRedirects\Csi\Validator\RegexValidatorInterface;
 
-class RegexPatternValidator
+class RegexValidator implements RegexValidatorInterface
 {
     /**
      * @param string $pattern
