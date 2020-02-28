@@ -22,6 +22,7 @@ use AuroraExtensions\SimpleRedirects\{
     Api\Data\RuleInterface,
     Component\Data\Container\DataContainerTrait,
     Csi\Data\Container\DataContainerInterface,
+    Csi\Validator\MatchValidatorInterface,
     Csi\Validator\RuleValidatorInterface,
     Exception\ExceptionFactory
 };
@@ -40,11 +41,11 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
      */
     use DataContainerTrait;
 
-    /** @property DataObjectFactory $dataObjectFactory */
-    private $dataObjectFactory;
-
     /** @property ExceptionFactory $exceptionFactory */
     private $exceptionFactory;
+
+    /** @property MatchValidatorInterface $matchValidator */
+    private $matchValidator;
 
     /** @property RequestInterface $request */
     private $request;
@@ -52,6 +53,7 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
     /**
      * @param DataObjectFactory $dataObjectFactory
      * @param ExceptionFactory $exceptionFactory
+     * @param MatchValidatorInterface $matchValidator
      * @param RequestInterface $request
      * @param array $data
      * @return void
@@ -59,10 +61,12 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
     public function __construct(
         DataObjectFactory $dataObjectFactory,
         ExceptionFactory $exceptionFactory,
+        MatchValidatorInterface $matchValidator,
         RequestInterface $request,
         array $data = []
     ) {
         $this->exceptionFactory = $exceptionFactory;
+        $this->matchValidator = $matchValidator;
         $this->request = $request;
         $this->setContainer($dataObjectFactory->create($data));
     }
@@ -114,6 +118,15 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
             ->getData('methods');
 
         return $methods[$ruleType] ?? null;
+    }
+
+    /**
+     * @return string
+     */
+    private function getHost(): string
+    {
+        return $this->request
+            ->getHost();
     }
 
     /**
