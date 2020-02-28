@@ -15,7 +15,7 @@ Installation
 Configuration
 =============
 
-To use Simple Redirects, make sure to activate the module from the backend.
+After installation, make sure to activate the module from the backend.
 
 .. code-block:: sh
 
