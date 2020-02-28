@@ -80,12 +80,15 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
         /** @var string $matchType */
         $matchType = $rule->getMatchType();
 
+        /** @var string $pattern */
+        $pattern = $rule->getPattern();
+
         /** @var string|null $subject */
         $subject = $this->getSubjectByRuleType($rule->getRuleType());
 
         if ($subject !== null) {
             return $this->matchValidator
-                ->validate($matchType, $subject);
+                ->validate($matchType, $pattern, $subject);
         }
 
         return false;
