@@ -93,16 +93,6 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
     }
 
     /**
-     * @param string $pattern
-     * @return bool
-     */
-    private function isRegexValid(string $pattern): bool
-    {
-        return $this->regexValidator
-            ->validate($pattern);
-    }
-
-    /**
      * @param string $matchType
      * @return string|null
      */
@@ -113,6 +103,16 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
             ->getData('methods');
 
         return $methods[$matchType] ?? null;
+    }
+
+    /**
+     * @param string $pattern
+     * @return bool
+     */
+    private function isRegexValid(string $pattern): bool
+    {
+        return $this->regexValidator
+            ->validate($pattern);
     }
 
     /**
