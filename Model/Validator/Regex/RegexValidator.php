@@ -19,8 +19,9 @@ declare(strict_types=1);
 namespace AuroraExtensions\SimpleRedirects\Model\Validator\Regex;
 
 use ErrorException;
+use AuroraExtensions\SimpleRedirects\Csi\Validator\RegexValidatorInterface;
 
-class RegexValidator
+class RegexValidator implements RegexValidatorInterface
 {
     /**
      * @param string $pattern
