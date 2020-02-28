@@ -109,6 +109,17 @@ interface RuleInterface
     public function setTarget(string $target): RuleInterface;
 
     /**
+     * @return int
+     */
+    public function getPriority(): int;
+
+    /**
+     * @param int $priority
+     * @return \AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface
+     */
+    public function setPriority(int $priority): RuleInterface;
+
+    /**
      * @return bool
      */
     public function getIsActive(): bool;
