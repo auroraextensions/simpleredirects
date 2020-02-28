@@ -161,6 +161,24 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
+     * @return int
+     */
+    public function getPriority(): int
+    {
+        return (int) $this->getData('priority');
+    }
+
+    /**
+     * @param int $priority
+     * @return RuleInterface
+     */
+    public function setPriority(int $priority): RuleInterface
+    {
+        $this->setData('priority', $priority);
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function getIsActive(): bool

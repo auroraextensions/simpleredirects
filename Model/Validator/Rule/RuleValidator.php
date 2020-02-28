@@ -77,6 +77,10 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
      */
     public function validate(RuleInterface $rule): bool
     {
+        if (!$rule->getIsActive()) {
+            return false;
+        }
+
         /** @var string $matchType */
         $matchType = $rule->getMatchType();
 
@@ -100,7 +104,7 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
      */
     private function getSubjectByRuleType(string $ruleType): ?string
     {
-        /** @var string $method */
+        /** @var string|null $method */
         $method = $this->getMethodByRuleType($ruleType);
 
         if ($method !== null) {
@@ -129,7 +133,7 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
     private function getHost(): string
     {
         return $this->request
-            ->getHost();
+            ->getHttpHost();
     }
 
     /**
