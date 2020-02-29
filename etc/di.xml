@@ -53,6 +53,18 @@
                     <item name="regex_match" xsi:type="string">Matches Regex</item>
                     <item name="not_regex_match" xsi:type="string">Does Not Match Regex</item>
                 </item>
+                <item name="priorities" xsi:type="array">
+                    <item name="1" xsi:type="number">1</item>
+                    <item name="2" xsi:type="number">2</item>
+                    <item name="3" xsi:type="number">3</item>
+                    <item name="4" xsi:type="number">4</item>
+                    <item name="5" xsi:type="number">5</item>
+                    <item name="6" xsi:type="number">6</item>
+                    <item name="7" xsi:type="number">7</item>
+                    <item name="8" xsi:type="number">8</item>
+                    <item name="9" xsi:type="number">9</item>
+                    <item name="10" xsi:type="number">10</item>
+                </item>
             </argument>
         </arguments>
     </type>
@@ -89,19 +101,25 @@
             </argument>
         </arguments>
     </virtualType>
-    <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectTypes"
+    <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectType"
                  type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
         <arguments>
             <argument name="key" xsi:type="string">redirect_types</argument>
         </arguments>
     </virtualType>
-    <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleTypes"
+    <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleType"
                  type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
         <arguments>
             <argument name="key" xsi:type="string">rule_types</argument>
         </arguments>
     </virtualType>
-    <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\MatchTypes"
+    <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Priority"
+                 type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
+        <arguments>
+            <argument name="key" xsi:type="string">priorities</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\MatchType"
                  type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
         <arguments>
             <argument name="key" xsi:type="string">match_types</argument>
