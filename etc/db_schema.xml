@@ -29,6 +29,7 @@
         <column xsi:type="varchar" name="match_type" nullable="false" length="16" comment="Match Type"/>
         <column xsi:type="varchar" name="pattern" nullable="false" length="256" comment="Pattern"/>
         <column xsi:type="varchar" name="target" nullable="false" length="256" comment="Target"/>
+        <column xsi:type="varchar" name="token" nullable="false" length="32" comment="Token"/>
         <column xsi:type="smallint" name="priority" padding="5" unsigned="true" nullable="false" default="1"
                 comment="Priority"/>
         <column xsi:type="smallint" name="is_active" padding="5" unsigned="true" nullable="false" default="1"
