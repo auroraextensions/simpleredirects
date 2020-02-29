@@ -24,7 +24,8 @@ use AuroraExtensions\SimpleRedirects\{
     Api\RuleRepositoryInterface,
     Component\Config\ModuleConfigTrait,
     Csi\Config\ModuleConfigInterface,
-    Exception\ExceptionFactory
+    Exception\ExceptionFactory,
+    Model\Request\Token
 };
 use Magento\Framework\{
     App\Action\Action,
@@ -195,6 +196,7 @@ class EditPost extends Action implements HttpPostActionInterface
                     'redirect_type' => $redirectType,
                     'pattern' => $pattern,
                     'target' => $target,
+                    'token' => Token::generate(),
                     'is_active' => $isActive,
                 ]);
                 $this->ruleRepository->save($rule);
