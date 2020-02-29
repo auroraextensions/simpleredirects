@@ -161,6 +161,24 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->getData('token');
+    }
+
+    /**
+     * @param string $token
+     * @return RuleInterface
+     */
+    public function setToken(string $token): RuleInterface
+    {
+        $this->setData('token', $token);
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getPriority(): int
