@@ -25,8 +25,8 @@
                 comment="Store ID"/>
         <column xsi:type="smallint" name="redirect_type" padding="5" unsigned="true" nullable="false" default="301"
                 comment="Redirect Type"/>
-        <column xsi:type="varchar" name="rule_type" nullable="false" length="16" comment="Rule Type"/>
-        <column xsi:type="varchar" name="match_type" nullable="false" length="16" comment="Match Type"/>
+        <column xsi:type="varchar" name="rule_type" nullable="false" length="32" comment="Rule Type"/>
+        <column xsi:type="varchar" name="match_type" nullable="false" length="32" comment="Match Type"/>
         <column xsi:type="varchar" name="pattern" nullable="false" length="256" comment="Pattern"/>
         <column xsi:type="varchar" name="target" nullable="false" length="256" comment="Target"/>
         <column xsi:type="varchar" name="token" nullable="false" length="32" comment="Token"/>
