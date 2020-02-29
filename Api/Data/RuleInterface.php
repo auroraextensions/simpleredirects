@@ -109,6 +109,17 @@ interface RuleInterface
     public function setTarget(string $target): RuleInterface;
 
     /**
+     * @return string
+     */
+    public function getToken(): string;
+
+    /**
+     * @param string $token
+     * @return \AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface
+     */
+    public function setToken(string $token): RuleInterface;
+
+    /**
      * @return int
      */
     public function getPriority(): int;
