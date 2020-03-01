@@ -107,7 +107,7 @@
                 <dataType>select</dataType>
                 <filter>select</filter>
                 <label translate="true">Rule Type</label>
-                <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleTypes"/>
+                <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleType"/>
             </settings>
         </column>
         <column name="match_type" component="Magento_Ui/js/grid/columns/select" sortOrder="30">
@@ -115,7 +115,7 @@
                 <dataType>select</dataType>
                 <filter>select</filter>
                 <label translate="true">Match Type</label>
-                <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\MatchTypes"/>
+                <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\MatchType"/>
             </settings>
         </column>
         <column name="pattern" sortOrder="40">
@@ -132,15 +132,22 @@
                 <label translate="true">Target</label>
             </settings>
         </column>
-        <column name="redirect_type" component="Magento_Ui/js/grid/columns/select" sortOrder="60">
+        <column name="priority" sortOrder="60">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Priority</label>
+            </settings>
+        </column>
+        <column name="redirect_type" component="Magento_Ui/js/grid/columns/select" sortOrder="70">
             <settings>
                 <dataType>select</dataType>
                 <filter>select</filter>
                 <label translate="true">Redirect Type</label>
-                <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectTypes"/>
+                <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectType"/>
             </settings>
         </column>
-        <column name="is_active" component="Magento_Ui/js/grid/columns/select" sortOrder="70">
+        <column name="is_active" component="Magento_Ui/js/grid/columns/select" sortOrder="80">
             <settings>
                 <dataType>select</dataType>
                 <filter>select</filter>
