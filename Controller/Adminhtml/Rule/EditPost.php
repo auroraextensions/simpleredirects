@@ -175,6 +175,10 @@ class EditPost extends Action implements HttpPostActionInterface
             ? $this->escaper->escapeHtml($target)
             : null;
 
+        /** @var int|string|null $priority */
+        $priority = $request->getPostValue('priority');
+        $priority = is_numeric($priority) ? (int) $priority : 10;
+
         /** @var bool $isActive */
         $isActive = $request->getPostValue('is_active') ?? false;
         $isActive = filter_var(
@@ -196,6 +200,7 @@ class EditPost extends Action implements HttpPostActionInterface
                     'redirect_type' => $redirectType,
                     'pattern' => $pattern,
                     'target' => $target,
+                    'priority' => $priority,
                     'token' => Token::generate(),
                     'is_active' => $isActive,
                 ]);

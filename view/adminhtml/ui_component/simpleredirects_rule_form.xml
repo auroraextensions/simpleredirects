@@ -76,7 +76,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleTypes"/>
+                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleType"/>
                     </settings>
                 </select>
             </formElements>
@@ -93,7 +93,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\MatchTypes"/>
+                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\MatchType"/>
                     </settings>
                 </select>
             </formElements>
@@ -118,6 +118,23 @@
                 </validation>
             </settings>
         </field>
+        <field name="priority" formElement="select">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Priority</label>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Priority"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
         <field name="redirect_type" formElement="select">
             <settings>
                 <dataType>string</dataType>
@@ -130,7 +147,7 @@
             <formElements>
                 <select>
                     <settings>
-                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectTypes"/>
+                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectType"/>
                     </settings>
                 </select>
             </formElements>
