@@ -89,6 +89,19 @@ $rule = $viewModel->getRule();
                         </td>
                     </tr>
                     <tr>
+                        <th><?= $block->escapeHtml(__('Priority')) ?></th>
+                        <td>
+                            <span id="rule_priority">
+                                <?= $block->escapeHtml(
+                                    __(
+                                        '%1',
+                                        $rule->getPriority()
+                                    )
+                                ) ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
                         <th><?= $block->escapeHtml(__('Redirect Type')) ?></th>
                         <td>
                             <span id="redirect_type">
