@@ -131,6 +131,17 @@ interface RuleInterface
     public function setPriority(int $priority): RuleInterface;
 
     /**
+     * @return int|null
+     */
+    public function getDependsOn(): ?int;
+
+    /**
+     * @param int $dependsOn
+     * @return RuleInterface
+     */
+    public function setDependsOn(int $dependsOn): RuleInterface;
+
+    /**
      * @return bool
      */
     public function getIsActive(): bool;
