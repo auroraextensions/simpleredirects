@@ -27,6 +27,7 @@ use AuroraExtensions\SimpleRedirects\{
 };
 use Magento\Framework\{
     Api\SearchCriteriaBuilder,
+    Api\SortOrderBuilder,
     App\ActionFactory,
     App\Action\Redirect,
     App\RequestInterface,
@@ -62,6 +63,9 @@ class Router implements RouterInterface
     /** @property SearchCriteriaBuilder $searchCriteriaBuilder */
     private $searchCriteriaBuilder;
 
+    /** @property SortOrderBuilder $sortOrderBuilder */
+    private $sortOrderBuilder;
+
     /** @property UrlInterface $urlBuilder */
     private $urlBuilder;
 
@@ -73,6 +77,7 @@ class Router implements RouterInterface
      * @param RuleRepositoryInterface $ruleRepository
      * @param RuleValidatorInterface $ruleValidator
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param SortOrderBuilder $sortOrderBuilder
      * @param UrlInterface $urlBuilder
      * @return void
      */
@@ -84,6 +89,7 @@ class Router implements RouterInterface
         RuleRepositoryInterface $ruleRepository,
         RuleValidatorInterface $ruleValidator,
         SearchCriteriaBuilder $searchCriteriaBuilder,
+        SortOrderBuilder $sortOrderBuilder,
         UrlInterface $urlBuilder
     ) {
         $this->actionFactory = $actionFactory;
@@ -93,6 +99,7 @@ class Router implements RouterInterface
         $this->ruleRepository = $ruleRepository;
         $this->ruleValidator = $ruleValidator;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->sortOrderBuilder = $sortOrderBuilder;
         $this->urlBuilder = $urlBuilder;
     }
 
@@ -141,8 +148,17 @@ class Router implements RouterInterface
      */
     private function getRules(): array
     {
+        /** @var SortOrder $sortOrder */
+        $sortOrder = $this->sortOrderBuilder
+            ->setField('priority')
+            ->setAscendingDirection()
+            ->create();
+
         /** @var SearchCriteriaInterface $criteria */
-        $criteria = $this->searchCriteriaBuilder->create();
+        $criteria = $this->searchCriteriaBuilder
+            ->addFilter('is_active', '1')
+            ->setSortOrders([$sortOrder])
+            ->create();
 
         return $this->ruleRepository
             ->getList($criteria)
