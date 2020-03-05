@@ -197,6 +197,27 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
+     * @return int|null
+     */
+    public function getDependsOn(): ?int
+    {
+        /** @var int $dependsOn */
+        $dependsOn = (int) $this->getData('depends_on');
+
+        return $dependsOn ?: null;
+    }
+
+    /**
+     * @param int $dependsOn
+     * @return RuleInterface
+     */
+    public function setDependsOn(int $dependsOn): RuleInterface
+    {
+        $this->setData('depends_on', $dependsOn);
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function getIsActive(): bool
