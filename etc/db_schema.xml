@@ -30,8 +30,9 @@
         <column xsi:type="varchar" name="pattern" nullable="false" length="256" comment="Pattern"/>
         <column xsi:type="varchar" name="target" nullable="false" length="256" comment="Target"/>
         <column xsi:type="varchar" name="token" nullable="false" length="32" comment="Token"/>
-        <column xsi:type="smallint" name="priority" padding="5" unsigned="true" nullable="false" default="1"
+        <column xsi:type="smallint" name="priority" padding="5" unsigned="true" nullable="false" default="5"
                 comment="Priority"/>
+        <column xsi:type="int" name="depends_on" padding="10" unsigned="true" nullable="true" comment="Depends On"/>
         <column xsi:type="smallint" name="is_active" padding="5" unsigned="true" nullable="false" default="1"
                 comment="Is Active"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"

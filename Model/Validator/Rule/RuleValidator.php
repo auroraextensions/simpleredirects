@@ -20,6 +20,7 @@ namespace AuroraExtensions\SimpleRedirects\Model\Validator\Rule;
 
 use AuroraExtensions\SimpleRedirects\{
     Api\Data\RuleInterface,
+    Api\RuleRepositoryInterface,
     Component\Data\Container\DataContainerTrait,
     Csi\Data\Container\DataContainerInterface,
     Csi\Validator\MatchValidatorInterface,
@@ -29,7 +30,9 @@ use AuroraExtensions\SimpleRedirects\{
 use Magento\Framework\{
     App\RequestInterface,
     DataObject,
-    DataObject\Factory as DataObjectFactory
+    DataObject\Factory as DataObjectFactory,
+    Exception\LocalizedException,
+    Exception\NoSuchEntityException
 };
 
 class RuleValidator implements RuleValidatorInterface, DataContainerInterface
@@ -50,11 +53,15 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
     /** @property RequestInterface $request */
     private $request;
 
+    /** @property RuleRepositoryInterface $ruleRepository */
+    private $ruleRepository;
+
     /**
      * @param DataObjectFactory $dataObjectFactory
      * @param ExceptionFactory $exceptionFactory
      * @param MatchValidatorInterface $matchValidator
      * @param RequestInterface $request
+     * @param RuleRepositoryInterface $ruleRepository
      * @param array $data
      * @return void
      */
@@ -63,11 +70,13 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
         ExceptionFactory $exceptionFactory,
         MatchValidatorInterface $matchValidator,
         RequestInterface $request,
+        RuleRepositoryInterface $ruleRepository,
         array $data = []
     ) {
         $this->exceptionFactory = $exceptionFactory;
         $this->matchValidator = $matchValidator;
         $this->request = $request;
+        $this->ruleRepository = $ruleRepository;
         $this->setContainer($dataObjectFactory->create($data));
     }
 
@@ -77,10 +86,43 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
      */
     public function validate(RuleInterface $rule): bool
     {
-        if (!$rule->getIsActive()) {
+        /** @var RuleInterface|null $parent */
+        $parent = $this->getParentRule($rule);
+
+        if ($parent !== null && !$this->validate($parent)) {
             return false;
         }
 
+        return $this->isMatch($rule);
+    }
+
+    /**
+     * @param RuleInterface $rule
+     * @return RuleInterface|null
+     */
+    private function getParentRule(RuleInterface $rule): ?RuleInterface
+    {
+        /** @var int|null $dependsOn */
+        $dependsOn = $rule->getDependsOn();
+
+        if ($dependsOn !== null) {
+            try {
+                return $this->ruleRepository
+                    ->getById($dependsOn);
+            } catch (NoSuchEntityException | LocalizedException $e) {
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param RuleInterface $rule
+     * @return bool
+     */
+    private function isMatch(RuleInterface $rule): bool
+    {
         /** @var string $matchType */
         $matchType = $rule->getMatchType();
 
