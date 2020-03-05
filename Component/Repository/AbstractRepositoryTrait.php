@@ -86,6 +86,7 @@ trait AbstractRepositoryTrait
         /** @var AbstractCollectionInterface $collection */
         $collection = $this->collectionFactory->create();
 
+        /** @var FilterGroup $group */
         foreach ($criteria->getFilterGroups() as $group) {
             $this->addFilterGroupToCollection($group, $collection);
         }
