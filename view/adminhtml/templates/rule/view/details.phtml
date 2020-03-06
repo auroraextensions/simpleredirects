@@ -37,6 +37,19 @@ $rule = $viewModel->getRule();
             <div class="admin__page-section-item-content">
                 <table class="admin__table-secondary rule-information-table">
                     <tr>
+                        <th><?= $block->escapeHtml(__('Rule Name')) ?></th>
+                        <td>
+                            <span id="rule_name">
+                                <?= $block->escapeHtml(
+                                    __(
+                                        '%1',
+                                        $rule->getName()
+                                    )
+                                ) ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
                         <th><?= $block->escapeHtml(__('Rule Type')) ?></th>
                         <td>
                             <span id="rule_type">
