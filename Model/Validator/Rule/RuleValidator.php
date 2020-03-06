@@ -102,13 +102,13 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
      */
     private function getParentRule(RuleInterface $rule): ?RuleInterface
     {
-        /** @var int|null $dependsOn */
-        $dependsOn = $rule->getDependsOn();
+        /** @var int|null $parentId */
+        $parentId = $rule->getParentId();
 
-        if ($dependsOn !== null) {
+        if ($parentId !== null) {
             try {
                 return $this->ruleRepository
-                    ->getById($dependsOn);
+                    ->getById($parentId);
             } catch (NoSuchEntityException | LocalizedException $e) {
                 return null;
             }

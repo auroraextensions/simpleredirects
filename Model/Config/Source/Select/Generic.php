@@ -67,8 +67,6 @@ class Generic implements ArrayInterface
     }
 
     /**
-     * Get formatted option key/value pairs.
-     *
      * @return array
      */
     public function toOptionArray()

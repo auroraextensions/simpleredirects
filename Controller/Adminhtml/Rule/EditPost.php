@@ -145,22 +145,26 @@ class EditPost extends Action implements HttpPostActionInterface
             ]);
         }
 
+        /** @var string|null $ruleName */
+        $ruleName = $request->getPostValue('name');
+        $ruleName = $ruleName !== null && !empty($ruleName)
+            ? $this->escaper->escapeHtml($ruleName)
+            : null;
+
         /** @var string|null $ruleType */
         $ruleType = $request->getPostValue('rule_type');
         $ruleType = $ruleType !== null && !empty($ruleType)
             ? $this->escaper->escapeHtml($ruleType)
             : null;
 
+        /** @var int|string|null $parentId */
+        $parentId = $request->getPostValue('parent_id');
+        $parentId = is_numeric($parentId) ? (int) $parentId : null;
+
         /** @var string|null $matchType */
         $matchType = $request->getPostValue('match_type');
         $matchType = $matchType !== null && !empty($matchType)
             ? $this->escaper->escapeHtml($matchType)
-            : null;
-
-        /** @var string|null $redirectType */
-        $redirectType = $request->getPostValue('redirect_type');
-        $redirectType = $redirectType !== null && !empty($redirectType)
-            ? $this->escaper->escapeHtml($redirectType)
             : null;
 
         /** @var string|null $pattern */
@@ -179,6 +183,12 @@ class EditPost extends Action implements HttpPostActionInterface
         $priority = $request->getPostValue('priority');
         $priority = is_numeric($priority) ? (int) $priority : 10;
 
+        /** @var string|null $redirectType */
+        $redirectType = $request->getPostValue('redirect_type');
+        $redirectType = $redirectType !== null && !empty($redirectType)
+            ? $this->escaper->escapeHtml($redirectType)
+            : null;
+
         /** @var bool $isActive */
         $isActive = $request->getPostValue('is_active') ?? false;
         $isActive = filter_var(
@@ -195,7 +205,9 @@ class EditPost extends Action implements HttpPostActionInterface
                 /** @var RuleInterface $rule */
                 $rule = $this->ruleRepository->getById($ruleId);
                 $rule->addData([
+                    'name' => $ruleName,
                     'rule_type' => $ruleType,
+                    'parent_id' => $parentId,
                     'match_type' => $matchType,
                     'redirect_type' => $redirectType,
                     'pattern' => $pattern,
