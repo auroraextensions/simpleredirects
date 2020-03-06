@@ -23,16 +23,17 @@
                 comment="Rule ID"/>
         <column xsi:type="int" name="store_id" padding="10" unsigned="true" nullable="false" default="0"
                 comment="Store ID"/>
-        <column xsi:type="smallint" name="redirect_type" padding="5" unsigned="true" nullable="false" default="301"
-                comment="Redirect Type"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="64" comment="Name"/>
         <column xsi:type="varchar" name="rule_type" nullable="false" length="32" comment="Rule Type"/>
+        <column xsi:type="int" name="parent_id" padding="10" unsigned="true" nullable="true" comment="Parent ID"/>
         <column xsi:type="varchar" name="match_type" nullable="false" length="32" comment="Match Type"/>
         <column xsi:type="varchar" name="pattern" nullable="false" length="256" comment="Pattern"/>
         <column xsi:type="varchar" name="target" nullable="false" length="256" comment="Target"/>
         <column xsi:type="varchar" name="token" nullable="false" length="32" comment="Token"/>
         <column xsi:type="smallint" name="priority" padding="5" unsigned="true" nullable="false" default="5"
                 comment="Priority"/>
-        <column xsi:type="int" name="depends_on" padding="10" unsigned="true" nullable="true" comment="Depends On"/>
+        <column xsi:type="smallint" name="redirect_type" padding="5" unsigned="true" nullable="false" default="301"
+                comment="Redirect Type"/>
         <column xsi:type="smallint" name="is_active" padding="5" unsigned="true" nullable="false" default="1"
                 comment="Is Active"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
@@ -42,6 +43,9 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="rule_id"/>
         </constraint>
+        <index referenceId="SIMPLEREDIRECTS_RULE_RULE_TYPE" indexType="btree">
+            <column name="rule_type"/>
+        </index>
         <index referenceId="SIMPLEREDIRECTS_RULE_REDIRECT_TYPE" indexType="btree">
             <column name="redirect_type"/>
         </index>
