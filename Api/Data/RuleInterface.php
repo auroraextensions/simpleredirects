@@ -54,15 +54,15 @@ interface RuleInterface
     public function setStoreId(int $storeId): RuleInterface;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getRedirectType(): int;
+    public function getName(): string;
 
     /**
-     * @param int $redirectType
+     * @param string $name
      * @return \AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface
      */
-    public function setRedirectType(int $redirectType): RuleInterface;
+    public function setName(string $name): RuleInterface;
 
     /**
      * @return string
@@ -74,6 +74,17 @@ interface RuleInterface
      * @return \AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface
      */
     public function setRuleType(string $ruleType): RuleInterface;
+
+    /**
+     * @return int|null
+     */
+    public function getParentId(): ?int;
+
+    /**
+     * @param int $parentId
+     * @return \AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface
+     */
+    public function setParentId(int $parentId): RuleInterface;
 
     /**
      * @return string
@@ -131,15 +142,15 @@ interface RuleInterface
     public function setPriority(int $priority): RuleInterface;
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getDependsOn(): ?int;
+    public function getRedirectType(): int;
 
     /**
-     * @param int $dependsOn
-     * @return RuleInterface
+     * @param int $redirectType
+     * @return \AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface
      */
-    public function setDependsOn(int $dependsOn): RuleInterface;
+    public function setRedirectType(int $redirectType): RuleInterface;
 
     /**
      * @return bool
