@@ -71,20 +71,20 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getRedirectType(): int
+    public function getName(): string
     {
-        return (int) $this->getData('redirect_type');
+        return $this->getData('name');
     }
 
     /**
-     * @param int $redirectType
+     * @param string $name
      * @return RuleInterface
      */
-    public function setRedirectType(int $redirectType): RuleInterface
+    public function setName(string $name): RuleInterface
     {
-        $this->setData('redirect_type', $redirectType);
+        $this->setData('name', $name);
         return $this;
     }
 
@@ -103,6 +103,27 @@ class Rule extends AbstractModel implements RuleInterface
     public function setRuleType(string $ruleType): RuleInterface
     {
         $this->setData('rule_type', $ruleType);
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getParentId(): ?int
+    {
+        /** @var int $parentId */
+        $parentId = (int) $this->getData('parent_id');
+
+        return $parentId ?: null;
+    }
+
+    /**
+     * @param int $parentId
+     * @return RuleInterface
+     */
+    public function setParentId(int $parentId): RuleInterface
+    {
+        $this->setData('parent_id', $parentId);
         return $this;
     }
 
@@ -197,23 +218,20 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getDependsOn(): ?int
+    public function getRedirectType(): int
     {
-        /** @var int $dependsOn */
-        $dependsOn = (int) $this->getData('depends_on');
-
-        return $dependsOn ?: null;
+        return (int) $this->getData('redirect_type');
     }
 
     /**
-     * @param int $dependsOn
+     * @param int $redirectType
      * @return RuleInterface
      */
-    public function setDependsOn(int $dependsOn): RuleInterface
+    public function setRedirectType(int $redirectType): RuleInterface
     {
-        $this->setData('depends_on', $dependsOn);
+        $this->setData('redirect_type', $redirectType);
         return $this;
     }
 
