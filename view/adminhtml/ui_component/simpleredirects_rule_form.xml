@@ -64,6 +64,16 @@
                 <visible>false</visible>
             </settings>
         </field>
+        <field name="name" formElement="input">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Name</label>
+                <required>true</required>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
         <field name="rule_type" formElement="select">
             <settings>
                 <dataType>string</dataType>
@@ -77,6 +87,20 @@
                 <select>
                     <settings>
                         <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleType"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="parent_id" formElement="select">
+            <settings>
+                <dataType>string</dataType>
+                <label translate="true">Depends On</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <caption translate="true">-- Please Select --</caption>
+                        <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Rule"/>
                     </settings>
                 </select>
             </formElements>
