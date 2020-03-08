@@ -102,7 +102,14 @@
                 <sorting>asc</sorting>
             </settings>
         </column>
-        <column name="rule_type" component="Magento_Ui/js/grid/columns/select" sortOrder="20">
+        <column name="name" sortOrder="20">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Rule Name</label>
+            </settings>
+        </column>
+        <column name="rule_type" component="Magento_Ui/js/grid/columns/select" sortOrder="30">
             <settings>
                 <dataType>select</dataType>
                 <filter>select</filter>
@@ -110,7 +117,16 @@
                 <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleType"/>
             </settings>
         </column>
-        <column name="match_type" component="Magento_Ui/js/grid/columns/select" sortOrder="30">
+        <column name="parent_id"
+                class="AuroraExtensions\SimpleRedirects\Ui\Component\Listing\Column\ParentId"
+                sortOrder="40">
+            <settings>
+                <dataType>text</dataType>
+                <filter>text</filter>
+                <label translate="true">Depends On</label>
+            </settings>
+        </column>
+        <column name="match_type" component="Magento_Ui/js/grid/columns/select" sortOrder="50">
             <settings>
                 <dataType>select</dataType>
                 <filter>select</filter>
@@ -118,28 +134,28 @@
                 <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\MatchType"/>
             </settings>
         </column>
-        <column name="pattern" sortOrder="40">
+        <column name="pattern" sortOrder="60">
             <settings>
                 <bodyTmpl>ui/grid/cells/html</bodyTmpl>
                 <filter>text</filter>
                 <label translate="true">Pattern</label>
             </settings>
         </column>
-        <column name="target" sortOrder="50">
+        <column name="target" sortOrder="70">
             <settings>
                 <dataType>text</dataType>
                 <filter>text</filter>
                 <label translate="true">Target</label>
             </settings>
         </column>
-        <column name="priority" sortOrder="60">
+        <column name="priority" sortOrder="80">
             <settings>
                 <dataType>text</dataType>
                 <filter>text</filter>
                 <label translate="true">Priority</label>
             </settings>
         </column>
-        <column name="redirect_type" component="Magento_Ui/js/grid/columns/select" sortOrder="70">
+        <column name="redirect_type" component="Magento_Ui/js/grid/columns/select" sortOrder="90">
             <settings>
                 <dataType>select</dataType>
                 <filter>select</filter>
@@ -147,7 +163,7 @@
                 <options class="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectType"/>
             </settings>
         </column>
-        <column name="is_active" component="Magento_Ui/js/grid/columns/select" sortOrder="80">
+        <column name="is_active" component="Magento_Ui/js/grid/columns/select" sortOrder="100">
             <settings>
                 <dataType>select</dataType>
                 <filter>select</filter>
@@ -157,7 +173,7 @@
         </column>
         <actionsColumn name="actions"
                        class="AuroraExtensions\SimpleRedirects\Ui\Component\Listing\Column\Actions"
-                       sortOrder="100">
+                       sortOrder="110">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="viewUrlPath" xsi:type="string">simpleredirects/rule/view</item>
