@@ -124,11 +124,14 @@ class Router implements RouterInterface
                 return null;
             }
 
-            if ($this->validate($rule)) {
+            /** @var string|null $target */
+            $target = $rule->getTarget();
+
+            if ($this->validate($rule) && $target !== null) {
                 $this->addQueryParams([$token => null]);
 
                 /** @var string $redirectUrl */
-                $redirectUrl = $this->getRedirectUrl($rule->getTarget());
+                $redirectUrl = $this->getRedirectUrl($target);
 
                 $this->response->setRedirect(
                     $redirectUrl,
