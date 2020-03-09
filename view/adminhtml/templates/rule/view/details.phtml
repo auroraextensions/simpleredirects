@@ -63,6 +63,19 @@ $rule = $viewModel->getRule();
                         </td>
                     </tr>
                     <tr>
+                        <th><?= $block->escapeHtml(__('Depends On')) ?></th>
+                        <td>
+                            <span id="parent_name">
+                                <?= $block->escapeHtml(
+                                    __(
+                                        '%1',
+                                        $viewModel->getParentName()
+                                    )
+                                ) ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
                         <th><?= $block->escapeHtml(__('Match Type')) ?></th>
                         <td>
                             <span id="match_type">
@@ -95,7 +108,7 @@ $rule = $viewModel->getRule();
                                 <?= $block->escapeHtml(
                                     __(
                                         '%1',
-                                        $rule->getTarget()
+                                        $rule->getTarget() ?? '---'
                                     )
                                 ) ?>
                             </span>

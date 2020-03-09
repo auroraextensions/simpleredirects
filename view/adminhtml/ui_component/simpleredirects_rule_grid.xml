@@ -118,7 +118,7 @@
             </settings>
         </column>
         <column name="parent_id"
-                class="AuroraExtensions\SimpleRedirects\Ui\Component\Listing\Column\ParentId"
+                class="AuroraExtensions\SimpleRedirects\Ui\Component\Listing\Column\Rule\ParentId"
                 sortOrder="40">
             <settings>
                 <dataType>text</dataType>
@@ -141,7 +141,9 @@
                 <label translate="true">Pattern</label>
             </settings>
         </column>
-        <column name="target" sortOrder="70">
+        <column name="target"
+                class="AuroraExtensions\SimpleRedirects\Ui\Component\Listing\Column\Rule\Target"
+                sortOrder="70">
             <settings>
                 <dataType>text</dataType>
                 <filter>text</filter>
