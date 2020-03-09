@@ -32,8 +32,8 @@ use Magento\Ui\Component\Listing\Columns\Column;
 
 class ParentId extends Column
 {
-    /** @property string $paramKey */
-    private $paramKey;
+    /** @property string $entityKey */
+    private $entityKey;
 
     /** @property RuleRepositoryInterface $ruleRepository */
     private $ruleRepository;
@@ -44,7 +44,7 @@ class ParentId extends Column
      * @param array $components
      * @param array $data
      * @param RuleRepositoryInterface $ruleRepository
-     * @param string|null $paramKey
+     * @param string|null $entityKey
      * @return void
      */
     public function __construct(
@@ -53,7 +53,7 @@ class ParentId extends Column
         array $components = [],
         array $data = [],
         RuleRepositoryInterface $ruleRepository,
-        string $paramKey = null
+        string $entityKey = null
     ) {
         parent::__construct(
             $context,
@@ -62,7 +62,7 @@ class ParentId extends Column
             $data
         );
         $this->ruleRepository = $ruleRepository;
-        $this->paramKey = $paramKey ?? 'parent_id';
+        $this->entityKey = $entityKey ?? 'parent_id';
     }
 
     /**
@@ -75,8 +75,8 @@ class ParentId extends Column
             /** @var array $item */
             foreach ($dataSource['data']['items'] as &$item) {
                 /** @var string|null $value */
-                $value = $item[$this->paramKey] ?? null;
-                $item[$this->paramKey] = $this->getLabel($value);
+                $value = $item[$this->entityKey] ?? null;
+                $item[$this->entityKey] = $this->getLabel($value);
             }
         }
 
