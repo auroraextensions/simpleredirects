@@ -164,9 +164,9 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTarget(): string
+    public function getTarget(): ?string
     {
         return $this->getData('target');
     }
