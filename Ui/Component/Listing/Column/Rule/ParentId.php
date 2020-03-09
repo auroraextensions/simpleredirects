@@ -16,7 +16,7 @@
  */
 declare(strict_types=1);
 
-namespace AuroraExtensions\SimpleRedirects\Ui\Component\Listing\Column;
+namespace AuroraExtensions\SimpleRedirects\Ui\Component\Listing\Column\Rule;
 
 use AuroraExtensions\SimpleRedirects\{
     Api\Data\RuleInterface,
