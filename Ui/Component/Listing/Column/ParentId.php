@@ -101,6 +101,6 @@ class ParentId extends Column
             }
         }
 
-        return 'N/A';
+        return '---';
     }
 }
