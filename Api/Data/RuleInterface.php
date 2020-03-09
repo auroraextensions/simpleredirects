@@ -109,9 +109,9 @@ interface RuleInterface
     public function setPattern(string $pattern): RuleInterface;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTarget(): string;
+    public function getTarget(): ?string;
 
     /**
      * @param string $target
