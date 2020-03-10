@@ -118,10 +118,10 @@ class Rule extends AbstractModel implements RuleInterface
     }
 
     /**
-     * @param int $parentId
+     * @param int|null $parentId
      * @return RuleInterface
      */
-    public function setParentId(int $parentId): RuleInterface
+    public function setParentId(?int $parentId): RuleInterface
     {
         $this->setData('parent_id', $parentId);
         return $this;
