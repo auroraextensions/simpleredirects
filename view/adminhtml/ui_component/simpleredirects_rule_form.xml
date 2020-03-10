@@ -28,6 +28,7 @@
     </argument>
     <settings>
         <buttons>
+            <button name="cancel" class="AuroraExtensions\SimpleRedirects\Ui\Component\Control\Rule\CancelButton"/>
             <button name="save" class="AuroraExtensions\SimpleRedirects\Ui\Component\Control\Rule\SaveButton"/>
         </buttons>
         <ajaxSave>true</ajaxSave>
