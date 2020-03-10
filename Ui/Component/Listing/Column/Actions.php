@@ -83,9 +83,6 @@ class Actions extends Column
                     /** @var string $viewUrlPath */
                     $viewUrlPath = $this->getData('config/viewUrlPath') ?? '#';
 
-                    /** @var string $editUrlPath */
-                    $editUrlPath = $this->getData('config/editUrlPath') ?? '#';
-
                     $item[$this->getData('name')] = [
                         'view' => [
                             'href' => $this->urlBuilder->getUrl(
@@ -95,15 +92,6 @@ class Actions extends Column
                                 ]
                             ),
                             'label' => __('View'),
-                        ],
-                        'edit' => [
-                            'href' => $this->urlBuilder->getUrl(
-                                $editUrlPath,
-                                [
-                                    $entityParam => $item[$entityParam],
-                                ]
-                            ),
-                            'label' => __('Edit'),
                         ],
                     ];
                 }

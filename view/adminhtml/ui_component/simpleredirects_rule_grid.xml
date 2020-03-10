@@ -179,7 +179,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="viewUrlPath" xsi:type="string">simpleredirects/rule/view</item>
-                    <item name="editUrlPath" xsi:type="string">simpleredirects/rule/edit</item>
                     <item name="entityParam" xsi:type="string">rule_id</item>
                 </item>
             </argument>
