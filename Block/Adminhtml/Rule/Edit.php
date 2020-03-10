@@ -56,7 +56,7 @@ class Edit extends Container
         $this->addButton(
             'simpleredirects_rule_edit',
             [
-                'class' => 'edit secondary',
+                'class' => 'edit primary',
                 'id' => 'simpleredirects-rule-edit',
                 'label' => __('Edit'),
                 'onclick' => $this->getOnClickJs() ?? '',
