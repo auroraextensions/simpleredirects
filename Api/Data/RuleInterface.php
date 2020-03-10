@@ -81,10 +81,10 @@ interface RuleInterface
     public function getParentId(): ?int;
 
     /**
-     * @param int $parentId
+     * @param int|null $parentId
      * @return \AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface
      */
-    public function setParentId(int $parentId): RuleInterface;
+    public function setParentId(?int $parentId): RuleInterface;
 
     /**
      * @return string
