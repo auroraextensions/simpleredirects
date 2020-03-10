@@ -20,6 +20,7 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="page.actions.toolbar">
+            <block class="AuroraExtensions\SimpleRedirects\Block\Adminhtml\Rule\Back" name="simpleredirects_rule_back_button"/>
             <block class="AuroraExtensions\SimpleRedirects\Block\Adminhtml\Rule\Edit" name="simpleredirects_rule_edit_button"/>
         </referenceBlock>
         <referenceContainer name="content">
