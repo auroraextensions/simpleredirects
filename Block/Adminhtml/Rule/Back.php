@@ -1,6 +1,6 @@
 <?php
 /**
- * Edit.php
+ * Back.php
  *
  * NOTICE OF LICENSE
  *
@@ -23,7 +23,7 @@ use Magento\Backend\{
     Block\Widget\Container
 };
 
-class Edit extends Container
+class Back extends Container
 {
     /** @property string $_blockGroup */
     protected $_blockGroup = 'AuroraExtensions_SimpleRedirects';
@@ -49,45 +49,34 @@ class Edit extends Container
     public function _construct()
     {
         parent::_construct();
-        $this->_objectId = 'simpleredirects_rule_edit';
+        $this->_objectId = 'simpleredirects_rule_back';
         $this->_controller = 'adminhtml_rule';
-        $this->setId('simpleredirects_rule_edit');
+        $this->setId('simpleredirects_rule_back');
 
         $this->addButton(
-            'simpleredirects_rule_edit',
+            'simpleredirects_rule_back',
             [
-                'class' => 'edit primary',
-                'id' => 'simpleredirects-rule-edit',
-                'label' => __('Edit'),
-                'onclick' => $this->getOnClickJs() ?? '',
+                'class' => 'back secondary',
+                'id' => 'simpleredirects-rule-back',
+                'label' => __('Back'),
+                'onclick' => $this->getOnClickJs(),
             ]
         );
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    private function getOnClickJs(): ?string
+    private function getOnClickJs(): string
     {
-        /** @var int|string|null $ruleId */
-        $ruleId = $this->getRequest()->getParam('rule_id');
-        $ruleId = $ruleId !== null && is_numeric($ruleId)
-            ? (int) $ruleId
-            : null;
+        /** @var string $targetUrl */
+        $targetUrl = $this->getUrl(
+            'simpleredirects/rule/index',
+            [
+                '_secure' => true,
+            ]
+        );
 
-        if ($ruleId !== null) {
-            /** @var string $targetUrl */
-            $targetUrl = $this->getUrl(
-                'simpleredirects/rule/edit',
-                [
-                    'rule_id' => $ruleId,
-                    '_secure' => true,
-                ]
-            );
-
-            return "(function(){window.location='{$targetUrl}';})();";
-        }
-
-        return null;
+        return "(function(){window.location='{$targetUrl}';})();";
     }
 }
