@@ -16,7 +16,8 @@
 var config = {
     map: {
         '*': {
-            simpleRedirectsAjaxSaveRedirect: 'AuroraExtensions_SimpleRedirects/js/form/redirect'
+            simpleRedirectsAjaxSaveRedirect: 'AuroraExtensions_SimpleRedirects/js/form/redirect',
+            simpleRedirectsAjaxDeleteRule: 'AuroraExtensions_SimpleRedirects/js/rule/delete'
         }
     }
 };
