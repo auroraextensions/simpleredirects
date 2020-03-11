@@ -97,7 +97,7 @@
                  type="AuroraExtensions\SimpleRedirects\Ui\Component\Control\SaveButton">
         <arguments>
             <argument name="components" xsi:type="array">
-                <item name="simpleRedirectsAjaxSaveRedirect" xsi:type="array"></item>
+                <item name="simpleRedirectsAjaxSaveRedirect" xsi:type="array"/>
             </argument>
         </arguments>
     </virtualType>
@@ -105,6 +105,16 @@
                  type="AuroraExtensions\SimpleRedirects\Ui\Component\Control\CancelButton">
         <arguments>
             <argument name="route" xsi:type="string">simpleredirects/rule/index</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="AuroraExtensions\SimpleRedirects\Ui\Component\Control\Rule\DeleteButton"
+                 type="AuroraExtensions\SimpleRedirects\Ui\Component\Control\DeleteButton">
+        <arguments>
+            <argument name="buttonId" xsi:type="string">rule-edit-delete-button</argument>
+            <argument name="components" xsi:type="array">
+                <item name="simpleRedirectsAjaxDeleteRule" xsi:type="array"/>
+            </argument>
+            <argument name="route" xsi:type="string">simpleredirects/rule/deletePost</argument>
         </arguments>
     </virtualType>
     <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectType"
