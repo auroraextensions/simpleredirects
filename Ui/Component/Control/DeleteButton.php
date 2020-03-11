@@ -32,6 +32,12 @@ class DeleteButton implements ButtonProviderInterface
     /** @property string $aclResource */
     private $aclResource;
 
+    /** @property string $buttonId */
+    private $buttonId;
+
+    /** @property array $components */
+    private $components = [];
+
     /** @property RequestInterface $request */
     private $request;
 
@@ -45,19 +51,28 @@ class DeleteButton implements ButtonProviderInterface
      * @param RequestInterface $request
      * @param UrlInterface $urlBuilder
      * @param string $aclResource
+     * @param string $buttonId
      * @param string $route
+     * @param array $components
      * @return void
      */
     public function __construct(
         RequestInterface $request,
         UrlInterface $urlBuilder,
         string $aclResource = self::ACL_RESOURCE,
-        string $route = null
+        string $buttonId = 'delete',
+        string $route = '*',
+        array $components = []
     ) {
         $this->request = $request;
         $this->urlBuilder = $urlBuilder;
         $this->aclResource = $aclResource;
-        $this->route = $route ?? '';
+        $this->buttonId = $buttonId;
+        $this->route = $route;
+        $this->components = $this->getMergeData(
+            $this->components,
+            $components
+        );
     }
 
     /**
@@ -69,8 +84,10 @@ class DeleteButton implements ButtonProviderInterface
             'aclResource' => $this->aclResource,
             'class' => 'delete',
             'data_attribute' => [
+                'mage-init' => $this->components,
                 'url' => $this->getDeleteUrl(),
             ],
+            'id' => $this->buttonId,
             'label' => __('Delete'),
             'on_click' => '',
             'sort_order' => 20,
@@ -98,5 +115,25 @@ class DeleteButton implements ButtonProviderInterface
     {
         return (int) $this->request
             ->getParam('rule_id');
+    }
+
+    /**
+     * @param array[] ...$components
+     * @return array
+     */
+    private function getMergeData(array ...$components): array
+    {
+        /** @var array $result */
+        $result = [];
+
+        /** @var array $component */
+        foreach ($components as $component) {
+            $result = array_replace_recursive(
+                $result,
+                $component
+            );
+        }
+
+        return $result;
     }
 }
