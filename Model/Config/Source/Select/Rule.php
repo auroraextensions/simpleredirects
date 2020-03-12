@@ -20,7 +20,10 @@ namespace AuroraExtensions\SimpleRedirects\Model\Config\Source\Select;
 
 use AuroraExtensions\SimpleRedirects\{
     Api\Data\RuleInterface,
-    Api\RuleRepositoryInterface
+    Api\RuleRepositoryInterface,
+    Component\Utils\ArrayTrait,
+    Model\ResourceModel\Rule\Collection,
+    Model\ResourceModel\Rule\CollectionFactory
 };
 use Magento\Framework\{
     App\RequestInterface,
@@ -31,6 +34,17 @@ use Magento\Framework\{
 
 class Rule implements ArrayInterface
 {
+    /**
+     * @method array flattenArray()
+     */
+    use ArrayTrait;
+
+    /** @constant string PRIMARY_KEY */
+    private const PRIMARY_KEY = 'rule_id';
+
+    /** @property CollectionFactory $collectionFactory */
+    private $collectionFactory;
+
     /** @property array $options */
     private $options = [];
 
@@ -47,6 +61,7 @@ class Rule implements ArrayInterface
     private $sortOrderBuilder;
 
     /**
+     * @param CollectionFactory $collectionFactory
      * @param RequestInterface $request
      * @param RuleRepositoryInterface $ruleRepository
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
@@ -54,11 +69,13 @@ class Rule implements ArrayInterface
      * @return void
      */
     public function __construct(
+        CollectionFactory $collectionFactory,
         RequestInterface $request,
         RuleRepositoryInterface $ruleRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
         SortOrderBuilder $sortOrderBuilder
     ) {
+        $this->collectionFactory = $collectionFactory;
         $this->request = $request;
         $this->ruleRepository = $ruleRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
@@ -80,7 +97,7 @@ class Rule implements ArrayInterface
         /** @var SearchCriteriaInterface $criteria */
         $criteria = $this->searchCriteriaBuilder
             ->addFilter('is_active', '1')
-            ->addFilter('rule_id', $this->getRuleId(), 'neq')
+            ->addFilter('rule_id', $this->getMergedRules(), 'nin')
             ->setSortOrders([$sortOrder])
             ->create();
 
@@ -108,6 +125,43 @@ class Rule implements ArrayInterface
     }
 
     /**
+     * @return array
+     */
+    private function getLinkedRules(): array
+    {
+        /** @var Collection $collection */
+        $collection = $this->collectionFactory
+            ->create()
+            ->addFieldToSelect('parent_id')
+            ->addFieldToFilter('parent_id', ['notnull' => true]);
+
+        /** @var array $ids */
+        $ids = $this->flattenArray($collection->toArray()['items'] ?? []);
+
+        return array_map('intval', $ids);
+    }
+
+    /**
+     * @return array
+     */
+    private function getMergedRules(): array
+    {
+        /** @var int $ruleId */
+        $ruleId = $this->getRuleId();
+
+        /** @var array $excludes */
+        $excludes = $ruleId !== 0 ? [$ruleId] : [];
+
+        /** @var array $merged */
+        $merged = array_replace(
+            $this->getLinkedRules(),
+            $excludes
+        );
+
+        return array_values($merged);
+    }
+
+    /**
      * @param string $key
      * @param int|string|null $value
      * @return void
@@ -121,7 +175,7 @@ class Rule implements ArrayInterface
     }
 
     /**
-     * @return array
+     * {@inheritdoc}
      */
     public function toOptionArray()
     {
