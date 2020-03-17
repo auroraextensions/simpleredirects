@@ -1,19 +1,23 @@
-.. contents:: :local:
+Simple Redirects
+================
+
+.. contents:: Table of Contents
+    :local:
 
 Description
-===========
+-----------
 
 Simple Redirects provides basic URL redirect management for Magento.
 
 Installation
-============
+------------
 
 .. code-block:: sh
 
     composer require auroraextensions/simpleredirects
 
 Configuration
-=============
+-------------
 
 After installation, make sure to activate the module from the backend.
 
