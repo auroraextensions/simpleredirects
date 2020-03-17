@@ -28,13 +28,16 @@ Once installed and enabled, make sure to activate the module from the backend.
 Documentation
 -------------
 
+.. |overview| replace:: Documentation Overview
 .. |install| replace:: Installation Guide
 .. |config| replace:: Configuration Guide
 .. |rules| replace:: Rules Guide
+.. _overview: https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/latest/index.html
 .. _install: https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/latest/installation.html
 .. _config: https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/latest/configuration.html
 .. _rules: https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/latest/rules.html
 
+* |overview|_
 * |install|_
 * |config|_
 * |rules|_
