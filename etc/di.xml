@@ -5,7 +5,7 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
@@ -13,7 +13,7 @@
  *
  * @package       AuroraExtensions_SimpleRedirects
  * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @license       MIT
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -72,9 +72,9 @@
         <arguments>
             <argument name="data" xsi:type="array">
                 <item name="methods" xsi:type="array">
+                    <item name="host" xsi:type="string">getHost</item>
                     <item name="path" xsi:type="string">getPath</item>
                     <item name="query" xsi:type="string">getQuery</item>
-                    <item name="host" xsi:type="string">getHost</item>
                 </item>
             </argument>
         </arguments>
