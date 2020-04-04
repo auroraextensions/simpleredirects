@@ -121,7 +121,7 @@ class RuleRepository implements RuleRepositoryInterface
      */
     public function delete(RuleInterface $rule): bool
     {
-        return $this->deleteById($rule->getId());
+        return $this->deleteById((int) $rule->getId());
     }
 
     /**
