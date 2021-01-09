@@ -18,14 +18,14 @@ declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Model\Validator\Rule;
 
+use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
 use AuroraExtensions\SimpleRedirects\{
     Api\Data\RuleInterface,
     Api\RuleRepositoryInterface,
     Component\Data\Container\DataContainerTrait,
     Csi\Data\Container\DataContainerInterface,
     Csi\Validator\MatchValidatorInterface,
-    Csi\Validator\RuleValidatorInterface,
-    Exception\ExceptionFactory
+    Csi\Validator\RuleValidatorInterface
 };
 use Magento\Framework\{
     App\RequestInterface,

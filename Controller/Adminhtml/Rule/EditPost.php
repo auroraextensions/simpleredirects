@@ -18,13 +18,13 @@ declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Controller\Adminhtml\Rule;
 
+use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
 use AuroraExtensions\SimpleRedirects\{
     Api\Data\RuleInterface,
     Api\Data\RuleInterfaceFactory,
     Api\RuleRepositoryInterface,
     Component\Config\ModuleConfigTrait,
     Csi\Config\ModuleConfigInterface,
-    Exception\ExceptionFactory,
     Model\Request\Token
 };
 use Magento\Framework\{

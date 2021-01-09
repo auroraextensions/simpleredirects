@@ -4,7 +4,7 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
@@ -12,18 +12,18 @@
  *
  * @package       AuroraExtensions_SimpleRedirects
  * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @license       MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Model\ViewModel\Rule;
 
+use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
 use AuroraExtensions\SimpleRedirects\{
     Api\Data\RuleInterface,
     Api\RuleRepositoryInterface,
     Component\Config\ModuleConfigTrait,
-    Csi\Config\ModuleConfigInterface,
-    Exception\ExceptionFactory
+    Csi\Config\ModuleConfigInterface
 };
 use Magento\Framework\{
     App\RequestInterface,

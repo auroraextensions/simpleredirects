@@ -18,22 +18,24 @@ declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Model\Repository;
 
-use Magento\Framework\{
-    Api\SearchCriteriaInterface,
-    Api\SortOrder,
-    Exception\NoSuchEntityException
-};
+use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
 use AuroraExtensions\SimpleRedirects\{
     Api\RuleRepositoryInterface,
     Api\Data\RuleInterface,
     Api\Data\RuleInterfaceFactory,
     Api\Data\RuleSearchResultsInterfaceFactory,
     Component\Repository\AbstractRepositoryTrait,
-    Exception\ExceptionFactory,
     Model\ResourceModel\Rule as RuleResource,
     Model\ResourceModel\Rule\Collection,
     Model\ResourceModel\Rule\CollectionFactory
 };
+use Magento\Framework\{
+    Api\SearchCriteriaInterface,
+    Api\SortOrder,
+    Exception\NoSuchEntityException
+};
+
+use function __;
 
 class RuleRepository implements RuleRepositoryInterface
 {
