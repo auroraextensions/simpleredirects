@@ -18,13 +18,13 @@ declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Controller\Adminhtml\Rule;
 
+use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
 use AuroraExtensions\SimpleRedirects\{
     Api\Data\RuleInterface,
     Api\Data\RuleInterfaceFactory,
     Api\RuleRepositoryInterface,
     Component\Config\ModuleConfigTrait,
     Csi\Config\ModuleConfigInterface,
-    Exception\ExceptionFactory,
     Model\Request\Token
 };
 use Magento\Framework\{
@@ -41,6 +41,11 @@ use Magento\Framework\{
     Serialize\Serializer\Json,
     UrlInterface
 };
+
+use const FILTER_VALIDATE_BOOLEAN;
+use function filter_var;
+use function is_numeric;
+use function __;
 
 class CreatePost extends Action implements HttpPostActionInterface
 {
@@ -147,15 +152,11 @@ class CreatePost extends Action implements HttpPostActionInterface
 
         /** @var string|null $ruleName */
         $ruleName = $request->getPostValue('name');
-        $ruleName = $ruleName !== null && !empty($ruleName)
-            ? $this->escaper->escapeHtml($ruleName)
-            : null;
+        $ruleName = !empty($ruleName) ? $this->escaper->escapeHtml($ruleName) : null;
 
         /** @var string|null $ruleType */
         $ruleType = $request->getPostValue('rule_type');
-        $ruleType = $ruleType !== null && !empty($ruleType)
-            ? $this->escaper->escapeHtml($ruleType)
-            : null;
+        $ruleType = !empty($ruleType) ? $this->escaper->escapeHtml($ruleType) : null;
 
         /** @var int|string|null $parentId */
         $parentId = $request->getPostValue('parent_id');
@@ -163,21 +164,15 @@ class CreatePost extends Action implements HttpPostActionInterface
 
         /** @var string|null $matchType */
         $matchType = $request->getPostValue('match_type');
-        $matchType = $matchType !== null && !empty($matchType)
-            ? $this->escaper->escapeHtml($matchType)
-            : null;
+        $matchType = !empty($matchType) ? $this->escaper->escapeHtml($matchType) : null;
 
         /** @var string|null $pattern */
         $pattern = $request->getPostValue('pattern');
-        $pattern = $pattern !== null && !empty($pattern)
-            ? $this->escaper->escapeHtml($pattern)
-            : null;
+        $pattern = !empty($pattern) ? $this->escaper->escapeHtml($pattern) : null;
 
         /** @var string|null $target */
         $target = $request->getPostValue('target');
-        $target = $target !== null && !empty($target)
-            ? $this->escaper->escapeHtml($target)
-            : null;
+        $target = !empty($target) ? $this->escaper->escapeHtml($target) : null;
 
         /** @var int|string|null $priority */
         $priority = $request->getPostValue('priority');
@@ -185,9 +180,7 @@ class CreatePost extends Action implements HttpPostActionInterface
 
         /** @var string|null $redirectType */
         $redirectType = $request->getPostValue('redirect_type');
-        $redirectType = $redirectType !== null && !empty($redirectType)
-            ? $this->escaper->escapeHtml($redirectType)
-            : null;
+        $redirectType = !empty($redirectType) ? $this->escaper->escapeHtml($redirectType) : null;
 
         /** @var bool $isActive */
         $isActive = $request->getPostValue('is_active') ?? false;
@@ -216,11 +209,10 @@ class CreatePost extends Action implements HttpPostActionInterface
             $ruleId = $this->ruleRepository->save($rule);
 
             /** @var string $viewUrl */
-            $viewUrl = $this->urlBuilder
-                ->getUrl('simpleredirects/rule/view', [
-                    'rule_id'  => $ruleId,
-                    '_secure' => true,
-                ]);
+            $viewUrl = $this->urlBuilder->getUrl('simpleredirects/rule/view', [
+                'rule_id'  => $ruleId,
+                '_secure' => true,
+            ]);
 
             return $resultJson->setData([
                 'success' => true,
@@ -228,12 +220,7 @@ class CreatePost extends Action implements HttpPostActionInterface
                 'message' => __('Successfully created rule.'),
                 'viewUrl' => $viewUrl,
             ]);
-        } catch (NoSuchEntityException $e) {
-            $response = [
-                'error' => true,
-                'messages' => [$e->getMessage()],
-            ];
-        } catch (LocalizedException $e) {
+        } catch (NoSuchEntityException | LocalizedException $e) {
             $response = [
                 'error' => true,
                 'messages' => [$e->getMessage()],

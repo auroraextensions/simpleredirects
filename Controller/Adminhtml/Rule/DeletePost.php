@@ -18,12 +18,12 @@ declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Controller\Adminhtml\Rule;
 
+use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
 use AuroraExtensions\SimpleRedirects\{
     Api\Data\RuleInterface,
     Api\RuleRepositoryInterface,
     Component\Config\ModuleConfigTrait,
-    Csi\Config\ModuleConfigInterface,
-    Exception\ExceptionFactory
+    Csi\Config\ModuleConfigInterface
 };
 use Magento\Framework\{
     Api\SearchCriteriaBuilder,
@@ -41,7 +41,7 @@ use Magento\Framework\{
 class DeletePost extends Action implements HttpPostActionInterface
 {
     /**
-     * @property ModuleConfigInterface $moduleConfig
+     * @var ModuleConfigInterface $moduleConfig
      * @method bool isModuleEnabled()
      */
     use ModuleConfigTrait;

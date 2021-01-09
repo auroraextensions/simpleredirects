@@ -4,7 +4,7 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
@@ -12,18 +12,18 @@
  *
  * @package       AuroraExtensions_SimpleRedirects
  * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @license       MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Model\ViewModel\Rule;
 
+use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
 use AuroraExtensions\SimpleRedirects\{
     Api\Data\RuleInterface,
     Api\RuleRepositoryInterface,
     Component\Config\ModuleConfigTrait,
-    Csi\Config\ModuleConfigInterface,
-    Exception\ExceptionFactory
+    Csi\Config\ModuleConfigInterface
 };
 use Magento\Framework\{
     App\RequestInterface,
@@ -37,7 +37,7 @@ use Magento\Store\Model\StoreManagerInterface;
 class View implements ArgumentInterface
 {
     /**
-     * @property ModuleConfigInterface $moduleConfig
+     * @var ModuleConfigInterface $moduleConfig
      * @method bool isModuleEnabled()
      */
     use ModuleConfigTrait;
@@ -90,10 +90,7 @@ class View implements ArgumentInterface
     public function getLabel(string $type, string $key): string
     {
         /** @var array $labels */
-        $labels = $this->moduleConfig
-            ->getContainer()
-            ->getData($type) ?? [];
-
+        $labels = $this->moduleConfig->getContainer()->getData($type) ?? [];
         return $labels[$key] ?? $key;
     }
 
@@ -103,15 +100,13 @@ class View implements ArgumentInterface
     public function getRule(): ?RuleInterface
     {
         /** @var int|string|null $ruleId */
-        $ruleId = $this->request
-            ->getParam('rule_id');
+        $ruleId = $this->request->getParam('rule_id');
 
         if ($ruleId !== null) {
             try {
                 return $this->ruleRepository->getById((int) $ruleId);
             } catch (NoSuchEntityException | LocalizedException $e) {
-                $this->messageManager
-                    ->addErrorMessage($e->getMessage());
+                $this->messageManager->addErrorMessage($e->getMessage());
             }
         }
 
@@ -124,28 +119,23 @@ class View implements ArgumentInterface
     public function getParentName(): string
     {
         /** @var int|string|null $ruleId */
-        $ruleId = $this->request
-            ->getParam('rule_id');
+        $ruleId = $this->request->getParam('rule_id');
 
         if ($ruleId !== null) {
             try {
                 /** @var RuleInterface $rule */
-                $rule = $this->ruleRepository
-                    ->getById((int) $ruleId);
+                $rule = $this->ruleRepository->getById((int) $ruleId);
 
                 /** @var int|null $parentId */
                 $parentId = $rule->getParentId();
 
                 if ($parentId !== null) {
                     /** @var RuleInterface $parent */
-                    $parent = $this->ruleRepository
-                        ->getById($parentId);
-
+                    $parent = $this->ruleRepository->getById($parentId);
                     return $parent->getName();
                 }
             } catch (NoSuchEntityException | LocalizedException $e) {
-                $this->messageManager
-                    ->addErrorMessage($e->getMessage());
+                $this->messageManager->addErrorMessage($e->getMessage());
             }
         }
 
