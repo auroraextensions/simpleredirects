@@ -38,7 +38,7 @@ use Magento\Framework\{
 class RuleValidator implements RuleValidatorInterface, DataContainerInterface
 {
     /**
-     * @property DataObject $container
+     * @var DataObject $container
      * @method DataObject|null getContainer()
      * @method DataContainerInterface setContainer()
      */
@@ -106,8 +106,7 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
 
         if ($parentId !== null) {
             try {
-                return $this->ruleRepository
-                    ->getById($parentId);
+                return $this->ruleRepository->getById($parentId);
             } catch (NoSuchEntityException | LocalizedException $e) {
                 return null;
             }
@@ -132,8 +131,7 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
         $subject = $this->getSubjectByRuleType($rule->getRuleType());
 
         if ($subject !== null) {
-            return $this->matchValidator
-                ->validate($matchType, $pattern, $subject);
+            return $this->matchValidator->validate($matchType, $pattern, $subject);
         }
 
         return false;
@@ -162,9 +160,7 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
     private function getMethodByRuleType(string $ruleType): ?string
     {
         /** @var array $methods */
-        $methods = (array) $this->getContainer()
-            ->getData('methods');
-
+        $methods = (array) $this->getContainer()->getData('methods');
         return $methods[$ruleType] ?? null;
     }
 
@@ -173,8 +169,7 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
      */
     private function getHost(): string
     {
-        return $this->request
-            ->getHttpHost();
+        return $this->request->getHttpHost();
     }
 
     /**
@@ -182,8 +177,7 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
      */
     private function getPath(): string
     {
-        return $this->request
-            ->getPathInfo();
+        return $this->request->getPathInfo();
     }
 
     /**
@@ -191,8 +185,6 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
      */
     private function getQuery(): string
     {
-        return $this->request
-            ->getQuery()
-            ->toString();
+        return $this->request->getQuery()->toString();
     }
 }

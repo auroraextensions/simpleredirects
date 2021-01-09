@@ -31,10 +31,14 @@ use Magento\Framework\{
     DataObject\Factory as DataObjectFactory
 };
 
+use function is_int;
+use function preg_match;
+use function strpos;
+
 class MatchValidator implements MatchValidatorInterface, DataContainerInterface
 {
     /**
-     * @property DataObject $container
+     * @var DataObject $container
      * @method DataObject|null getContainer()
      * @method DataContainerInterface setContainer()
      */
@@ -71,17 +75,13 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
     }
 
     /**
-     * @param string $matchType
-     * @param string $pattern
-     * @param string $subject
-     * @return bool
+     * {@inheritdoc}
      */
     public function validate(
         string $matchType,
         string $pattern,
         string $subject
-    ): bool
-    {
+    ): bool {
         /** @var string|null $method */
         $method = $this->getMethodByMatchType($matchType);
 
@@ -99,9 +99,7 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
     private function getMethodByMatchType(string $matchType): ?string
     {
         /** @var array $methods */
-        $methods = (array) $this->getContainer()
-            ->getData('methods');
-
+        $methods = (array) $this->getContainer()->getData('methods');
         return $methods[$matchType] ?? null;
     }
 
@@ -111,8 +109,7 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
      */
     private function isRegexValid(string $pattern): bool
     {
-        return $this->regexValidator
-            ->validate($pattern);
+        return $this->regexValidator->validate($pattern);
     }
 
     /**
@@ -168,7 +165,6 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
 
         /** @var int|bool|null $result */
         $result = preg_match($pattern, $subject);
-
         return is_int($result) ? (bool) $result : false;
     }
 
@@ -185,7 +181,6 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
 
         /** @var int|bool|null $result */
         $result = !preg_match($pattern, $subject);
-
         return is_int($result) ? (bool) $result : false;
     }
 }

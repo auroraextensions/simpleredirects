@@ -41,7 +41,7 @@ use Magento\Framework\{
 class DeletePost extends Action implements HttpPostActionInterface
 {
     /**
-     * @property ModuleConfigInterface $moduleConfig
+     * @var ModuleConfigInterface $moduleConfig
      * @method bool isModuleEnabled()
      */
     use ModuleConfigTrait;
