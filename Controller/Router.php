@@ -37,36 +37,39 @@ use Magento\Framework\{
     Url\QueryParamsResolverInterface
 };
 
+use function array_key_exists;
+use function trim;
+
 class Router implements RouterInterface
 {
     /**
-     * @property ModuleConfigInterface $moduleConfig
+     * @var ModuleConfigInterface $moduleConfig
      * @method bool isModuleEnabled()
      */
     use ModuleConfigTrait;
 
-    /** @property ActionFactory $actionFactory */
+    /** @var ActionFactory $actionFactory */
     private $actionFactory;
 
-    /** @property QueryParamsResolverInterface $queryParamsResolver */
+    /** @var QueryParamsResolverInterface $queryParamsResolver */
     private $queryParamsResolver;
 
-    /** @property ResponseInterface $response */
+    /** @var ResponseInterface $response */
     private $response;
 
-    /** @property RuleRepositoryInterface $ruleRepository */
+    /** @var RuleRepositoryInterface $ruleRepository */
     private $ruleRepository;
 
-    /** @property RuleValidatorInterface $ruleValidator */
+    /** @var RuleValidatorInterface $ruleValidator */
     private $ruleValidator;
 
-    /** @property SearchCriteriaBuilder $searchCriteriaBuilder */
+    /** @var SearchCriteriaBuilder $searchCriteriaBuilder */
     private $searchCriteriaBuilder;
 
-    /** @property SortOrderBuilder $sortOrderBuilder */
+    /** @var SortOrderBuilder $sortOrderBuilder */
     private $sortOrderBuilder;
 
-    /** @property UrlInterface $urlBuilder */
+    /** @var UrlInterface $urlBuilder */
     private $urlBuilder;
 
     /**
@@ -137,9 +140,7 @@ class Router implements RouterInterface
                     $redirectUrl,
                     $rule->getRedirectType()
                 );
-
-                return $this->actionFactory
-                    ->create(Redirect::class);
+                return $this->actionFactory->create(Redirect::class);
             }
         }
 
@@ -179,8 +180,7 @@ class Router implements RouterInterface
             '_direct' => trim($url, '/'),
         ];
 
-        return $this->urlBuilder
-            ->getUrl('', $params);
+        return $this->urlBuilder->getUrl('', $params);
     }
 
     /**
@@ -198,8 +198,7 @@ class Router implements RouterInterface
             $result[$key] = $value ?? '';
         }
 
-        $this->queryParamsResolver
-            ->addQueryParams($result);
+        $this->queryParamsResolver->addQueryParams($result);
     }
 
     /**
@@ -210,12 +209,10 @@ class Router implements RouterInterface
     private function hasQueryParam(
         RequestInterface $request,
         string $paramKey
-    ): bool
-    {
+    ): bool {
         /** @var array $paramKeys */
-        $paramKeys = array_keys($request->getQuery()->toArray());
-
-        return in_array($paramKey, $paramKeys);
+        $paramKeys = $request->getQuery()->toArray();
+        return array_key_exists($paramKey, $paramKeys);
     }
 
     /**
@@ -224,7 +221,6 @@ class Router implements RouterInterface
      */
     private function validate(RuleInterface $rule): bool
     {
-        return $this->ruleValidator
-            ->validate($rule);
+        return $this->ruleValidator->validate($rule);
     }
 }
