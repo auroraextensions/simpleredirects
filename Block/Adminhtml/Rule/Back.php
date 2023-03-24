@@ -4,28 +4,28 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Block\Adminhtml\Rule
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Block\Adminhtml\Rule;
 
-use Magento\Backend\{
-    Block\Widget\Context,
-    Block\Widget\Container
-};
+use Magento\Backend\Block\Widget\Container;
+use Magento\Backend\Block\Widget\Context;
+
+use function __;
 
 class Back extends Container
 {
-    /** @property string $_blockGroup */
+    /** @var string $_blockGroup */
     protected $_blockGroup = 'AuroraExtensions_SimpleRedirects';
 
     /**
@@ -72,11 +72,8 @@ class Back extends Container
         /** @var string $targetUrl */
         $targetUrl = $this->getUrl(
             'simpleredirects/rule/index',
-            [
-                '_secure' => true,
-            ]
+            ['_secure' => true]
         );
-
         return "(function(){window.location='{$targetUrl}';})();";
     }
 }

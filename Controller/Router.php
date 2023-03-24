@@ -4,38 +4,34 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Controller
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Controller;
 
-use AuroraExtensions\SimpleRedirects\{
-    Api\Data\RuleInterface,
-    Api\RuleRepositoryInterface,
-    Component\Config\ModuleConfigTrait,
-    Csi\Config\ModuleConfigInterface,
-    Csi\Validator\RuleValidatorInterface
-};
-use Magento\Framework\{
-    Api\SearchCriteriaBuilder,
-    Api\SortOrderBuilder,
-    App\ActionFactory,
-    App\Action\Redirect,
-    App\RequestInterface,
-    App\ResponseInterface,
-    App\RouterInterface,
-    UrlInterface,
-    Url\QueryParamsResolverInterface
-};
+use AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface;
+use AuroraExtensions\SimpleRedirects\Api\RuleRepositoryInterface;
+use AuroraExtensions\SimpleRedirects\Component\Config\ModuleConfigTrait;
+use AuroraExtensions\SimpleRedirects\Csi\Config\ModuleConfigInterface;
+use AuroraExtensions\SimpleRedirects\Csi\Validator\RuleValidatorInterface;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Api\SortOrderBuilder;
+use Magento\Framework\App\ActionFactory;
+use Magento\Framework\App\Action\Redirect;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\ResponseInterface;
+use Magento\Framework\App\RouterInterface;
+use Magento\Framework\UrlInterface;
+use Magento\Framework\Url\QueryParamsResolverInterface;
 
 use function array_key_exists;
 use function trim;
@@ -115,11 +111,8 @@ class Router implements RouterInterface
             return null;
         }
 
-        /** @var RuleInterface[] $rules */
-        $rules = $this->getRules();
-
         /** @var RuleInterface $rule */
-        foreach ($rules as $rule) {
+        foreach ($this->getRules() as $rule) {
             /** @var string $token */
             $token = $rule->getToken();
 
@@ -132,12 +125,8 @@ class Router implements RouterInterface
 
             if ($this->validate($rule) && $target !== null) {
                 $this->addQueryParams([$token => null]);
-
-                /** @var string $redirectUrl */
-                $redirectUrl = $this->getRedirectUrl($target);
-
                 $this->response->setRedirect(
-                    $redirectUrl,
+                    $this->getRedirectUrl($target),
                     $rule->getRedirectType()
                 );
                 return $this->actionFactory->create(Redirect::class);
@@ -179,7 +168,6 @@ class Router implements RouterInterface
         $params = [
             '_direct' => trim($url, '/'),
         ];
-
         return $this->urlBuilder->getUrl('', $params);
     }
 

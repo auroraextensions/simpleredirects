@@ -4,39 +4,39 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Controller\Adminhtml\Rule
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Controller\Adminhtml\Rule;
 
 use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
-use AuroraExtensions\SimpleRedirects\{
-    Api\Data\RuleInterface,
-    Api\RuleRepositoryInterface,
-    Component\Config\ModuleConfigTrait,
-    Csi\Config\ModuleConfigInterface
-};
-use Magento\Framework\{
-    Api\SearchCriteriaBuilder,
-    App\Action\Action,
-    App\Action\Context,
-    App\Action\HttpPostActionInterface,
-    Data\Form\FormKey\Validator as FormKeyValidator,
-    Event\ManagerInterface as EventManagerInterface,
-    Exception\AlreadyExistsException,
-    Exception\LocalizedException,
-    Exception\NoSuchEntityException,
-    UrlInterface
-};
+use AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface;
+use AuroraExtensions\SimpleRedirects\Api\RuleRepositoryInterface;
+use AuroraExtensions\SimpleRedirects\Component\Config\ModuleConfigTrait;
+use AuroraExtensions\SimpleRedirects\Csi\Config\ModuleConfigInterface;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Controller\Result\Redirect;
+use Magento\Framework\Data\Form\FormKey\Validator as FormKeyValidator;
+use Magento\Framework\Event\ManagerInterface as EventManagerInterface;
+use Magento\Framework\Exception\AlreadyExistsException;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\UrlInterface;
+
+use function __;
 
 class DeletePost extends Action implements HttpPostActionInterface
 {
@@ -46,22 +46,22 @@ class DeletePost extends Action implements HttpPostActionInterface
      */
     use ModuleConfigTrait;
 
-    /** @property EventManagerInterface $eventManager */
+    /** @var EventManagerInterface $eventManager */
     protected $eventManager;
 
-    /** @property ExceptionFactory $exceptionFactory */
+    /** @var ExceptionFactory $exceptionFactory */
     protected $exceptionFactory;
 
-    /** @property FormKeyValidator $formKeyValidator */
+    /** @var FormKeyValidator $formKeyValidator */
     protected $formKeyValidator;
 
-    /** @property RuleRepositoryInterface $ruleRepository */
+    /** @var RuleRepositoryInterface $ruleRepository */
     protected $ruleRepository;
 
-    /** @property SearchCriteriaBuilder $searchCriteriaBuilder */
+    /** @var SearchCriteriaBuilder $searchCriteriaBuilder */
     protected $searchCriteriaBuilder;
 
-    /** @property UrlInterface $urlBuilder */
+    /** @var UrlInterface $urlBuilder */
     protected $urlBuilder;
 
     /**
@@ -103,10 +103,9 @@ class DeletePost extends Action implements HttpPostActionInterface
         /** @var Magento\Framework\App\RequestInterface $request */
         $request = $this->getRequest();
 
-        /** @var Magento\Framework\Controller\Result\Redirect $resultRedirect */
-        $resultRedirect = $this->resultRedirectFactory
-            ->create()
-            ->setPath('simpleredirects/rule/index');
+        /** @var Redirect $resultRedirect */
+        $resultRedirect = $this->resultRedirectFactory->create();
+        $resultRedirect->setPath('simpleredirects/rule/index');
 
         if (!$request->isPost()) {
             $this->messageManager->addErrorMessage(
@@ -133,7 +132,6 @@ class DeletePost extends Action implements HttpPostActionInterface
                 $this->messageManager->addSuccessMessage(
                     __('Successfully deleted rule.')
                 );
-
                 return $resultRedirect;
             }
 
@@ -141,7 +139,6 @@ class DeletePost extends Action implements HttpPostActionInterface
             $exception = $this->exceptionFactory->create(
                 LocalizedException::class
             );
-
             throw $exception;
         } catch (NoSuchEntityException | LocalizedException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());

@@ -10,28 +10,24 @@
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT
+ * @package     AuroraExtensions\SimpleRedirects\Model\ViewModel\Rule
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Model\ViewModel\Rule;
 
 use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
-use AuroraExtensions\SimpleRedirects\{
-    Api\Data\RuleInterface,
-    Api\RuleRepositoryInterface,
-    Component\Config\ModuleConfigTrait,
-    Csi\Config\ModuleConfigInterface
-};
-use Magento\Framework\{
-    App\RequestInterface,
-    Exception\LocalizedException,
-    Exception\NoSuchEntityException,
-    Message\ManagerInterface as MessageManagerInterface,
-    View\Element\Block\ArgumentInterface
-};
+use AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface;
+use AuroraExtensions\SimpleRedirects\Api\RuleRepositoryInterface;
+use AuroraExtensions\SimpleRedirects\Component\Config\ModuleConfigTrait;
+use AuroraExtensions\SimpleRedirects\Csi\Config\ModuleConfigInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Message\ManagerInterface as MessageManagerInterface;
+use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
 class View implements ArgumentInterface
@@ -42,19 +38,19 @@ class View implements ArgumentInterface
      */
     use ModuleConfigTrait;
 
-    /** @property ExceptionFactory $exceptionFactory */
+    /** @var ExceptionFactory $exceptionFactory */
     private $exceptionFactory;
 
-    /** @property MessageManagerInterface $messageManager */
+    /** @var MessageManagerInterface $messageManager */
     private $messageManager;
 
-    /** @property RequestInterface $request */
+    /** @var RequestInterface $request */
     private $request;
 
-    /** @property RuleRepositoryInterface $ruleRepository */
+    /** @var RuleRepositoryInterface $ruleRepository */
     private $ruleRepository;
 
-    /** @property StoreManagerInterface $storeManager */
+    /** @var StoreManagerInterface $storeManager */
     private $storeManager;
 
     /**

@@ -10,50 +10,45 @@
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT
+ * @package     AuroraExtensions\SimpleRedirects\Model\Validator\Rule
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Model\Validator\Rule;
 
+use AuroraExtensions\ModuleComponents\Component\Data\Container\DataContainerTrait;
 use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
-use AuroraExtensions\SimpleRedirects\{
-    Api\Data\RuleInterface,
-    Api\RuleRepositoryInterface,
-    Component\Data\Container\DataContainerTrait,
-    Csi\Data\Container\DataContainerInterface,
-    Csi\Validator\MatchValidatorInterface,
-    Csi\Validator\RuleValidatorInterface
-};
-use Magento\Framework\{
-    App\RequestInterface,
-    DataObject,
-    DataObject\Factory as DataObjectFactory,
-    Exception\LocalizedException,
-    Exception\NoSuchEntityException
-};
+use AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface;
+use AuroraExtensions\SimpleRedirects\Api\RuleRepositoryInterface;
+use AuroraExtensions\SimpleRedirects\Csi\Validator\MatchValidatorInterface;
+use AuroraExtensions\SimpleRedirects\Csi\Validator\RuleValidatorInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\DataObject;
+use Magento\Framework\DataObject\Factory as DataObjectFactory;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 
-class RuleValidator implements RuleValidatorInterface, DataContainerInterface
+class RuleValidator implements RuleValidatorInterface
 {
     /**
      * @var DataObject $container
      * @method DataObject|null getContainer()
-     * @method DataContainerInterface setContainer()
+     * @method $this setContainer()
      */
     use DataContainerTrait;
 
-    /** @property ExceptionFactory $exceptionFactory */
+    /** @var ExceptionFactory $exceptionFactory */
     private $exceptionFactory;
 
-    /** @property MatchValidatorInterface $matchValidator */
+    /** @var MatchValidatorInterface $matchValidator */
     private $matchValidator;
 
-    /** @property RequestInterface $request */
+    /** @var RequestInterface $request */
     private $request;
 
-    /** @property RuleRepositoryInterface $ruleRepository */
+    /** @var RuleRepositoryInterface $ruleRepository */
     private $ruleRepository;
 
     /**
@@ -101,18 +96,14 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
      */
     private function getParentRule(RuleInterface $rule): ?RuleInterface
     {
-        /** @var int|null $parentId */
-        $parentId = $rule->getParentId();
-
-        if ($parentId !== null) {
-            try {
-                return $this->ruleRepository->getById($parentId);
-            } catch (NoSuchEntityException | LocalizedException $e) {
-                return null;
-            }
+        try {
+            /** @var int|null $parentId */
+            $parentId = $rule->getParentId();
+            return $parentId !== null
+                ? $this->ruleRepository->getById($parentId) : null;
+        } catch (NoSuchEntityException | LocalizedException $e) {
+            return null;
         }
-
-        return null;
     }
 
     /**
@@ -121,20 +112,18 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
      */
     private function isMatch(RuleInterface $rule): bool
     {
-        /** @var string $matchType */
-        $matchType = $rule->getMatchType();
-
-        /** @var string $pattern */
-        $pattern = $rule->getPattern();
-
         /** @var string|null $subject */
         $subject = $this->getSubjectByRuleType($rule->getRuleType());
 
-        if ($subject !== null) {
-            return $this->matchValidator->validate($matchType, $pattern, $subject);
+        if ($subject === null) {
+            return false;
         }
 
-        return false;
+        return $this->matchValidator->validate(
+            $rule->getMatchType(),
+            $rule->getPattern(),
+            $subject
+        );
     }
 
     /**
@@ -145,12 +134,8 @@ class RuleValidator implements RuleValidatorInterface, DataContainerInterface
     {
         /** @var string|null $method */
         $method = $this->getMethodByRuleType($ruleType);
-
-        if ($method !== null) {
-            return $this->{$method}() ?? null;
-        }
-
-        return null;
+        return $method !== null
+            ? $this->{$method}() : null;
     }
 
     /**

@@ -4,44 +4,44 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Ui\Component\Listing\Column
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Ui\Component\Listing\Column;
 
-use Magento\Framework\{
-    UrlInterface,
-    View\Element\UiComponent\ContextInterface,
-    View\Element\UiComponentFactory
-};
+use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Element\UiComponent\ContextInterface;
+use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
+
+use function __;
 
 class Actions extends Column
 {
-    /** @property string $paramKey */
-    protected $paramKey;
+    /** @var string $paramKey */
+    private $paramKey;
 
-    /** @property string $tokenKey */
-    protected $tokenKey;
+    /** @var string $tokenKey */
+    private $tokenKey;
 
-    /** @property UrlInterface $urlBuilder */
-    protected $urlBuilder;
+    /** @var UrlInterface $urlBuilder */
+    private $urlBuilder;
 
     /**
      * @param ContextInterface $context
      * @param UiComponentFactory $uiComponentFactory,
+     * @param UrlInterface $urlBuilder
      * @param array $components
      * @param array $data
-     * @param UrlInterface $urlBuilder
      * @param string $paramKey
      * @param string $tokenKey
      * @return void
@@ -49,9 +49,9 @@ class Actions extends Column
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
+        UrlInterface $urlBuilder,
         array $components = [],
         array $data = [],
-        UrlInterface $urlBuilder,
         string $paramKey = null,
         string $tokenKey = null
     ) {
@@ -85,23 +85,18 @@ class Actions extends Column
 
                     /** @var string $viewUrlPath */
                     $viewUrlPath = $this->getData('config/viewUrlPath') ?? '#';
-
                     $item[$this->getData('name')] = [
                         'edit' => [
                             'hidden' => true,
                             'href' => $this->urlBuilder->getUrl(
                                 $editUrlPath,
-                                [
-                                    $entityParam => $item[$entityParam],
-                                ]
+                                [$entityParam => $item[$entityParam]]
                             ),
                         ],
                         'view' => [
                             'href' => $this->urlBuilder->getUrl(
                                 $viewUrlPath,
-                                [
-                                    $entityParam => $item[$entityParam],
-                                ]
+                                [$entityParam => $item[$entityParam]]
                             ),
                             'label' => __('View'),
                         ],

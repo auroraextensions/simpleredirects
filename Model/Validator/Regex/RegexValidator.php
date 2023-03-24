@@ -4,22 +4,29 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Model\Validator\Regex
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Model\Validator\Regex;
 
-use ErrorException;
 use AuroraExtensions\SimpleRedirects\Csi\Validator\RegexValidatorInterface;
+use ErrorException;
+
+use function preg_last_error;
+use function preg_match;
+use function restore_error_handler;
+use function set_error_handler;
+
+use const PREG_INTERNAL_ERROR;
 
 class RegexValidator implements RegexValidatorInterface
 {
@@ -32,11 +39,14 @@ class RegexValidator implements RegexValidatorInterface
         try {
             set_error_handler([$this, 'onError']);
 
-            /** @var bool $isValid */
-            $isValid = preg_match($pattern, '') !== false;
+            /** @var int|false $match */
+            $match = preg_match($pattern, '');
             restore_error_handler();
 
-            return $isValid;
+            return (
+                preg_last_error() !== PREG_INTERNAL_ERROR
+                && $match !== false
+            );
         } catch (ErrorException $e) {
             return false;
         }
@@ -54,8 +64,7 @@ class RegexValidator implements RegexValidatorInterface
         string $message,
         string $file,
         int $line
-    ): void
-    {
+    ): void {
         throw new ErrorException(
             $message,
             $severity,

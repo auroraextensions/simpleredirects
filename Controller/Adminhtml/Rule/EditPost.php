@@ -4,48 +4,47 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Controller\Adminhtml\Rule
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Controller\Adminhtml\Rule;
 
 use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
-use AuroraExtensions\SimpleRedirects\{
-    Api\Data\RuleInterface,
-    Api\Data\RuleInterfaceFactory,
-    Api\RuleRepositoryInterface,
-    Component\Config\ModuleConfigTrait,
-    Csi\Config\ModuleConfigInterface,
-    Model\Request\Token
-};
-use Magento\Framework\{
-    App\Action\Action,
-    App\Action\Context,
-    App\Action\HttpPostActionInterface,
-    Controller\Result\JsonFactory as ResultJsonFactory,
-    Data\Form\FormKey\Validator as FormKeyValidator,
-    Escaper,
-    Event\ManagerInterface as EventManagerInterface,
-    Exception\AlreadyExistsException,
-    Exception\LocalizedException,
-    Exception\NoSuchEntityException,
-    Serialize\Serializer\Json,
-    UrlInterface
-};
+use AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface;
+use AuroraExtensions\SimpleRedirects\Api\Data\RuleInterfaceFactory;
+use AuroraExtensions\SimpleRedirects\Api\RuleRepositoryInterface;
+use AuroraExtensions\SimpleRedirects\Component\Config\ModuleConfigTrait;
+use AuroraExtensions\SimpleRedirects\Csi\Config\ModuleConfigInterface;
+use AuroraExtensions\SimpleRedirects\Model\Request\Token;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Controller\Result\Json as ResultJson;
+use Magento\Framework\Controller\Result\JsonFactory as ResultJsonFactory;
+use Magento\Framework\Data\Form\FormKey\Validator as FormKeyValidator;
+use Magento\Framework\Escaper;
+use Magento\Framework\Event\ManagerInterface as EventManagerInterface;
+use Magento\Framework\Exception\AlreadyExistsException;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\UrlInterface;
 
-use const FILTER_VALIDATE_BOOLEAN;
+use function __;
 use function filter_var;
 use function is_numeric;
-use function __;
+
+use const FILTER_VALIDATE_BOOLEAN;
 
 class EditPost extends Action implements HttpPostActionInterface
 {
@@ -55,31 +54,31 @@ class EditPost extends Action implements HttpPostActionInterface
      */
     use ModuleConfigTrait;
 
-    /** @property Escaper $escaper */
+    /** @var Escaper $escaper */
     protected $escaper;
 
-    /** @property EventManagerInterface $eventManager */
+    /** @var EventManagerInterface $eventManager */
     protected $eventManager;
 
-    /** @property ExceptionFactory $exceptionFactory */
+    /** @var ExceptionFactory $exceptionFactory */
     protected $exceptionFactory;
 
-    /** @property FormKeyValidator $formKeyValidator */
+    /** @var FormKeyValidator $formKeyValidator */
     protected $formKeyValidator;
 
-    /** @property ResultJsonFactory $resultJsonFactory */
+    /** @var ResultJsonFactory $resultJsonFactory */
     protected $resultJsonFactory;
 
-    /** @property Json $serializer */
+    /** @var Json $serializer */
     protected $serializer;
 
-    /** @property RuleInterfaceFactory $ruleFactory */
+    /** @var RuleInterfaceFactory $ruleFactory */
     protected $ruleFactory;
 
-    /** @property RuleRepositoryInterface $ruleRepository */
+    /** @var RuleRepositoryInterface $ruleRepository */
     protected $ruleRepository;
 
-    /** @property UrlInterface $urlBuilder */
+    /** @var UrlInterface $urlBuilder */
     protected $urlBuilder;
 
     /**
@@ -127,13 +126,13 @@ class EditPost extends Action implements HttpPostActionInterface
      */
     public function execute()
     {
-        /** @var Magento\Framework\App\RequestInterface $request */
+        /** @var RequestInterface $request */
         $request = $this->getRequest();
 
         /** @var array $response */
         $response = [];
 
-        /** @var Magento\Framework\Controller\Result\Json $resultJson */
+        /** @var ResultJson $resultJson */
         $resultJson = $this->resultJsonFactory->create();
 
         if (!$request->isPost()) {
@@ -152,11 +151,13 @@ class EditPost extends Action implements HttpPostActionInterface
 
         /** @var string|null $ruleName */
         $ruleName = $request->getPostValue('name');
-        $ruleName = !empty($ruleName) ? $this->escaper->escapeHtml($ruleName) : null;
+        $ruleName = !empty($ruleName)
+            ? $this->escaper->escapeHtml($ruleName) : null;
 
         /** @var string|null $ruleType */
         $ruleType = $request->getPostValue('rule_type');
-        $ruleType = !empty($ruleType) ? $this->escaper->escapeHtml($ruleType) : null;
+        $ruleType = !empty($ruleType)
+            ? $this->escaper->escapeHtml($ruleType) : null;
 
         /** @var int|string|null $parentId */
         $parentId = $request->getPostValue('parent_id');
@@ -164,15 +165,18 @@ class EditPost extends Action implements HttpPostActionInterface
 
         /** @var string|null $matchType */
         $matchType = $request->getPostValue('match_type');
-        $matchType = !empty($matchType) ? $this->escaper->escapeHtml($matchType) : null;
+        $matchType = !empty($matchType)
+            ? $this->escaper->escapeHtml($matchType) : null;
 
         /** @var string|null $pattern */
         $pattern = $request->getPostValue('pattern');
-        $pattern = !empty($pattern) ? $this->escaper->escapeHtml($pattern) : null;
+        $pattern = !empty($pattern)
+            ? $this->escaper->escapeHtml($pattern) : null;
 
         /** @var string|null $target */
         $target = $request->getPostValue('target');
-        $target = !empty($target) ? $this->escaper->escapeHtml($target) : null;
+        $target = !empty($target)
+            ? $this->escaper->escapeHtml($target) : null;
 
         /** @var int|string|null $priority */
         $priority = $request->getPostValue('priority');
@@ -180,7 +184,8 @@ class EditPost extends Action implements HttpPostActionInterface
 
         /** @var string|null $redirectType */
         $redirectType = $request->getPostValue('redirect_type');
-        $redirectType = !empty($redirectType) ? $this->escaper->escapeHtml($redirectType) : null;
+        $redirectType = !empty($redirectType)
+            ? $this->escaper->escapeHtml($redirectType) : null;
 
         /** @var bool $isActive */
         $isActive = $request->getPostValue('is_active') ?? false;
@@ -216,7 +221,6 @@ class EditPost extends Action implements HttpPostActionInterface
                     'rule_id'  => $ruleId,
                     '_secure' => true,
                 ]);
-
                 return $resultJson->setData([
                     'success' => true,
                     'isAjax'  => true,
@@ -229,7 +233,6 @@ class EditPost extends Action implements HttpPostActionInterface
             $exception = $this->exceptionFactory->create(
                 LocalizedException::class
             );
-
             throw $exception;
         } catch (NoSuchEntityException | LocalizedException $e) {
             $response = [

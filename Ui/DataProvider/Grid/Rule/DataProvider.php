@@ -4,43 +4,37 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Ui\DataProvider\Grid\Rule
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Ui\DataProvider\Grid\Rule;
 
+use AuroraExtensions\SimpleRedirects\Model\ResourceModel\Rule\Collection;
+use AuroraExtensions\SimpleRedirects\Model\ResourceModel\Rule\CollectionFactory;
 use Countable;
-use AuroraExtensions\SimpleRedirects\{
-    Model\ResourceModel\Rule\Collection,
-    Model\ResourceModel\Rule\CollectionFactory
-};
-use Magento\Framework\{
-    Api\Filter,
-    View\Element\UiComponent\DataProvider\DataProviderInterface
-};
-use Magento\Ui\{
-    DataProvider\AbstractDataProvider,
-    DataProvider\AddFieldToCollectionInterface,
-    DataProvider\AddFilterToCollectionInterface
-};
+use Magento\Framework\Api\Filter;
+use Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface;
+use Magento\Ui\DataProvider\AbstractDataProvider;
+use Magento\Ui\DataProvider\AddFieldToCollectionInterface;
+use Magento\Ui\DataProvider\AddFilterToCollectionInterface;
 
 class DataProvider extends AbstractDataProvider implements
-    Countable,
-    DataProviderInterface
+    DataProviderInterface,
+    Countable
 {
-    /** @property AddFieldToCollectionInterface[] $addFieldStrategies */
+    /** @var AddFieldToCollectionInterface[] $addFieldStrategies */
     private $addFieldStrategies;
 
-    /** @property AddFilterToCollectionInterface[] $addFilterStrategies */
+    /** @var AddFilterToCollectionInterface[] $addFilterStrategies */
     private $addFilterStrategies;
 
     /**

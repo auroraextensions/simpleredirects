@@ -4,60 +4,60 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Model\Config\Source\Select
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Model\Config\Source\Select;
 
-use AuroraExtensions\SimpleRedirects\{
-    Api\Data\RuleInterface,
-    Api\RuleRepositoryInterface,
-    Component\Utils\ArrayTrait,
-    Model\ResourceModel\Rule\Collection,
-    Model\ResourceModel\Rule\CollectionFactory
-};
-use Magento\Framework\{
-    App\RequestInterface,
-    Api\SearchCriteriaBuilder,
-    Api\SortOrderBuilder,
-    Option\ArrayInterface
-};
+use AuroraExtensions\ModuleComponents\Component\Utils\ArrayTrait;
+use AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface;
+use AuroraExtensions\SimpleRedirects\Api\RuleRepositoryInterface;
+use AuroraExtensions\SimpleRedirects\Model\ResourceModel\Rule\Collection;
+use AuroraExtensions\SimpleRedirects\Model\ResourceModel\Rule\CollectionFactory;
+use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Api\SortOrderBuilder;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Data\OptionSourceInterface;
 
-class Rule implements ArrayInterface
+use function __;
+use function array_map;
+use function array_replace;
+use function array_values;
+
+class Rule implements OptionSourceInterface
 {
     /**
-     * @method array flattenArray()
+     * @method array flatten()
      */
     use ArrayTrait;
 
-    /** @constant string PRIMARY_KEY */
     private const PRIMARY_KEY = 'rule_id';
 
-    /** @property CollectionFactory $collectionFactory */
+    /** @var CollectionFactory $collectionFactory */
     private $collectionFactory;
 
-    /** @property array $options */
+    /** @var array $options */
     private $options = [];
 
-    /** @property RequestInterface $request */
+    /** @var RequestInterface $request */
     private $request;
 
-    /** @property RuleRepositoryInterface $ruleRepository */
+    /** @var RuleRepositoryInterface $ruleRepository */
     private $ruleRepository;
 
-    /** @property SearchCriteriaBuilder $searchCriteriaBuilder */
+    /** @var SearchCriteriaBuilder $searchCriteriaBuilder */
     private $searchCriteriaBuilder;
 
-    /** @property SortOrderBuilder $sortOrderBuilder */
+    /** @var SortOrderBuilder $sortOrderBuilder */
     private $sortOrderBuilder;
 
     /**
@@ -135,10 +135,10 @@ class Rule implements ArrayInterface
             ->addFieldToSelect('parent_id')
             ->addFieldToFilter('parent_id', ['notnull' => true]);
 
-        /** @var array $ids */
-        $ids = $this->flattenArray($collection->toArray()['items'] ?? []);
-
-        return array_map('intval', $ids);
+        return array_map(
+            'intval',
+            $this->flatten($collection->toArray()['items'] ?? [])
+        );
     }
 
     /**
@@ -157,7 +157,6 @@ class Rule implements ArrayInterface
             $this->getLinkedRules(),
             $excludes
         );
-
         return array_values($merged);
     }
 
@@ -166,8 +165,10 @@ class Rule implements ArrayInterface
      * @param int|string|null $value
      * @return void
      */
-    private function setOption(string $key, $value = null): void
-    {
+    private function setOption(
+        string $key,
+        $value = null
+    ): void {
         $this->options[] = [
             'label' => __($key),
             'value' => $value ?? $key,

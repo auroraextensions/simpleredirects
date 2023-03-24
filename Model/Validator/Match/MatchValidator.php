@@ -10,47 +10,42 @@
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT
+ * @package     AuroraExtensions\SimpleRedirects\Model\Validator\Match
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Model\Validator\Match;
 
+use AuroraExtensions\ModuleComponents\Component\Data\Container\DataContainerTrait;
 use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
-use AuroraExtensions\SimpleRedirects\{
-    Component\Data\Container\DataContainerTrait,
-    Csi\Data\Container\DataContainerInterface,
-    Csi\Validator\MatchValidatorInterface,
-    Csi\Validator\RegexValidatorInterface
-};
-use Magento\Framework\{
-    App\RequestInterface,
-    DataObject,
-    DataObject\Factory as DataObjectFactory
-};
+use AuroraExtensions\SimpleRedirects\Csi\Validator\MatchValidatorInterface;
+use AuroraExtensions\SimpleRedirects\Csi\Validator\RegexValidatorInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\DataObject;
+use Magento\Framework\DataObject\Factory as DataObjectFactory;
 
 use function is_int;
 use function preg_match;
 use function strpos;
 
-class MatchValidator implements MatchValidatorInterface, DataContainerInterface
+class MatchValidator implements MatchValidatorInterface
 {
     /**
      * @var DataObject $container
      * @method DataObject|null getContainer()
-     * @method DataContainerInterface setContainer()
+     * @method $this setContainer()
      */
     use DataContainerTrait;
 
-    /** @property ExceptionFactory $exceptionFactory */
+    /** @var ExceptionFactory $exceptionFactory */
     private $exceptionFactory;
 
-    /** @property RegexValidatorInterface $regexValidator */
+    /** @var RegexValidatorInterface $regexValidator */
     private $regexValidator;
 
-    /** @property RequestInterface $request */
+    /** @var RequestInterface $request */
     private $request;
 
     /**
@@ -84,12 +79,8 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
     ): bool {
         /** @var string|null $method */
         $method = $this->getMethodByMatchType($matchType);
-
-        if ($method !== null) {
-            return $this->{$method}($pattern, $subject);
-        }
-
-        return false;
+        return $method !== null
+            ? $this->{$method}($pattern, $subject) : false;
     }
 
     /**
@@ -117,8 +108,10 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
      * @param string $subject
      * @return bool
      */
-    private function isEqual(string $pattern, string $subject): bool
-    {
+    private function isEqual(
+        string $pattern,
+        string $subject
+    ): bool {
         return ($pattern === $subject);
     }
 
@@ -127,8 +120,10 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
      * @param string $subject
      * @return bool
      */
-    private function isNotEqual(string $pattern, string $subject): bool
-    {
+    private function isNotEqual(
+        string $pattern,
+        string $subject
+    ): bool {
         return ($pattern !== $subject);
     }
 
@@ -137,8 +132,10 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
      * @param string $subject
      * @return bool
      */
-    private function isContains(string $pattern, string $subject): bool
-    {
+    private function isContains(
+        string $pattern,
+        string $subject
+    ): bool {
         return strpos($subject, $pattern) !== false;
     }
 
@@ -147,8 +144,10 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
      * @param string $subject
      * @return bool
      */
-    private function isNotContains(string $pattern, string $subject): bool
-    {
+    private function isNotContains(
+        string $pattern,
+        string $subject
+    ): bool {
         return strpos($subject, $pattern) === false;
     }
 
@@ -157,8 +156,10 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
      * @param string $subject
      * @return bool
      */
-    private function isRegexMatch(string $pattern, string $subject): bool
-    {
+    private function isRegexMatch(
+        string $pattern,
+        string $subject
+    ): bool {
         if (!$this->isRegexValid($pattern)) {
             return false;
         }
@@ -173,8 +174,10 @@ class MatchValidator implements MatchValidatorInterface, DataContainerInterface
      * @param string $subject
      * @return bool
      */
-    private function isNotRegexMatch(string $pattern, string $subject): bool
-    {
+    private function isNotRegexMatch(
+        string $pattern,
+        string $subject
+    ): bool {
         if (!$this->isRegexValid($pattern)) {
             return false;
         }

@@ -4,51 +4,51 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Ui\Component\Control
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Ui\Component\Control;
 
-use Magento\Framework\{
-    App\RequestInterface,
-    Data\Form\FormKey,
-    UrlInterface,
-    View\Element\UiComponent\Control\ButtonProviderInterface
-};
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Data\Form\FormKey;
+use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+
+use function __;
+use function array_replace_recursive;
 
 class DeleteButton implements ButtonProviderInterface
 {
-    /** @constant string ACL_RESOURCE */
     private const ACL_RESOURCE = 'AuroraExtensions_SimpleRedirects::delete';
 
-    /** @property string $aclResource */
+    /** @var string $aclResource */
     private $aclResource;
 
-    /** @property string $buttonId */
+    /** @var string $buttonId */
     private $buttonId;
 
-    /** @property array $components */
+    /** @var array $components */
     private $components = [];
 
-    /** @property FormKey $formKey */
+    /** @var FormKey $formKey */
     private $formKey;
 
-    /** @property RequestInterface $request */
+    /** @var RequestInterface $request */
     private $request;
 
-    /** @property string $route */
+    /** @var string $route */
     private $route;
 
-    /** @property UrlInterface $urlBuilder */
+    /** @var UrlInterface $urlBuilder */
     private $urlBuilder;
 
     /**
@@ -76,7 +76,7 @@ class DeleteButton implements ButtonProviderInterface
         $this->aclResource = $aclResource;
         $this->buttonId = $buttonId;
         $this->route = $route;
-        $this->components = $this->getMergeData(
+        $this->components = array_replace_recursive(
             $this->components,
             $components
         );
@@ -132,25 +132,5 @@ class DeleteButton implements ButtonProviderInterface
     {
         return (int) $this->request
             ->getParam('rule_id');
-    }
-
-    /**
-     * @param array[] ...$components
-     * @return array
-     */
-    private function getMergeData(array ...$components): array
-    {
-        /** @var array $result */
-        $result = [];
-
-        /** @var array $component */
-        foreach ($components as $component) {
-            $result = array_replace_recursive(
-                $result,
-                $component
-            );
-        }
-
-        return $result;
     }
 }

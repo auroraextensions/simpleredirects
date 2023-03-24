@@ -4,62 +4,54 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Model\Repository
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Model\Repository;
 
+use AuroraExtensions\ModuleComponents\Component\Repository\AbstractRepositoryTrait;
 use AuroraExtensions\ModuleComponents\Exception\ExceptionFactory;
-use AuroraExtensions\SimpleRedirects\{
-    Api\RuleRepositoryInterface,
-    Api\Data\RuleInterface,
-    Api\Data\RuleInterfaceFactory,
-    Api\Data\RuleSearchResultsInterfaceFactory,
-    Component\Repository\AbstractRepositoryTrait,
-    Model\ResourceModel\Rule as RuleResource,
-    Model\ResourceModel\Rule\Collection,
-    Model\ResourceModel\Rule\CollectionFactory
-};
-use Magento\Framework\{
-    Api\SearchCriteriaInterface,
-    Api\SortOrder,
-    Exception\NoSuchEntityException
-};
+use AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface;
+use AuroraExtensions\SimpleRedirects\Api\Data\RuleInterfaceFactory;
+use AuroraExtensions\SimpleRedirects\Api\Data\RuleSearchResultsInterfaceFactory;
+use AuroraExtensions\SimpleRedirects\Api\RuleRepositoryInterface;
+use AuroraExtensions\SimpleRedirects\Model\ResourceModel\Rule as RuleResource;
+use AuroraExtensions\SimpleRedirects\Model\ResourceModel\Rule\Collection;
+use AuroraExtensions\SimpleRedirects\Model\ResourceModel\Rule\CollectionFactory;
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\Api\SortOrder;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 use function __;
 
 class RuleRepository implements RuleRepositoryInterface
 {
     /**
+     * @var CollectionFactory $collectionFactory
+     * @var RuleSearchResultsInterfaceFactory $searchResultsFactory
      * @method void addFilterGroupToCollection()
      * @method string getDirection()
      * @method SearchResultsInterface getList()
      */
     use AbstractRepositoryTrait;
 
-    /** @property CollectionFactory $collectionFactory */
-    protected $collectionFactory;
+    /** @var ExceptionFactory $exceptionFactory */
+    private $exceptionFactory;
 
-    /** @property ExceptionFactory $exceptionFactory */
-    protected $exceptionFactory;
+    /** @var RuleInterfaceFactory $ruleFactory */
+    private $ruleFactory;
 
-    /** @property RuleInterfaceFactory $ruleFactory */
-    protected $ruleFactory;
-
-    /** @property RuleResourceInterface $ruleResource */
-    protected $ruleResource;
-
-    /** @property RuleSearchResultsInterfaceFactory $searchResultsFactory */
-    protected $searchResultsFactory;
+    /** @var RuleResourceInterface $ruleResource */
+    private $ruleResource;
 
     /**
      * @param CollectionFactory $collectionFactory
@@ -100,7 +92,6 @@ class RuleRepository implements RuleRepositoryInterface
                 NoSuchEntityException::class,
                 __('Unable to locate matching rule information.')
             );
-
             throw $exception;
         }
 
@@ -135,7 +126,6 @@ class RuleRepository implements RuleRepositoryInterface
         /** @var RuleInterface $rule */
         $rule = $this->ruleFactory->create();
         $rule->setId($id);
-
         return (bool) $this->ruleResource->delete($rule);
     }
 }
