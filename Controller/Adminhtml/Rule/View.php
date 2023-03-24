@@ -4,32 +4,31 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Controller\Adminhtml\Rule
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Controller\Adminhtml\Rule;
 
-use Magento\Backend\{
-    App\Action,
-    App\Action\Context
-};
-use Magento\Framework\{
-    App\Action\HttpGetActionInterface,
-    View\Result\PageFactory
-};
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\View\Result\Page;
+use Magento\Framework\View\Result\PageFactory;
+
+use function __;
 
 class View extends Action implements HttpGetActionInterface
 {
-    /** @property PageFactory $resultPageFactory */
+    /** @var PageFactory $resultPageFactory */
     protected $resultPageFactory;
 
     /**

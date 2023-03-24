@@ -11,9 +11,9 @@
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT
+ * @package     AuroraExtensions\SimpleRedirects
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -118,27 +118,52 @@
         </arguments>
     </virtualType>
     <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RedirectType"
-                 type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
+                 type="AuroraExtensions\ModuleComponents\Model\Config\Source\Select\VirtualSelect">
         <arguments>
-            <argument name="key" xsi:type="string">redirect_types</argument>
+            <argument name="data" xsi:type="array">
+                <item name="301" xsi:type="string">301 [Permanent]</item>
+                <item name="302" xsi:type="string">302 [Temporary]</item>
+            </argument>
         </arguments>
     </virtualType>
     <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\RuleType"
-                 type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
+                 type="AuroraExtensions\ModuleComponents\Model\Config\Source\Select\VirtualSelect">
         <arguments>
-            <argument name="key" xsi:type="string">rule_types</argument>
+            <argument name="data" xsi:type="array">
+                <item name="path" xsi:type="string">Path</item>
+                <item name="query" xsi:type="string">Query Parameter</item>
+                <item name="host" xsi:type="string">Host</item>
+            </argument>
         </arguments>
     </virtualType>
     <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Priority"
-                 type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
+                 type="AuroraExtensions\ModuleComponents\Model\Config\Source\Select\VirtualSelect">
         <arguments>
-            <argument name="key" xsi:type="string">priorities</argument>
+            <argument name="data" xsi:type="array">
+                <item name="1" xsi:type="number">1</item>
+                <item name="2" xsi:type="number">2</item>
+                <item name="3" xsi:type="number">3</item>
+                <item name="4" xsi:type="number">4</item>
+                <item name="5" xsi:type="number">5</item>
+                <item name="6" xsi:type="number">6</item>
+                <item name="7" xsi:type="number">7</item>
+                <item name="8" xsi:type="number">8</item>
+                <item name="9" xsi:type="number">9</item>
+                <item name="10" xsi:type="number">10</item>
+            </argument>
         </arguments>
     </virtualType>
     <virtualType name="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\MatchType"
-                 type="AuroraExtensions\SimpleRedirects\Model\Config\Source\Select\Generic">
+                 type="AuroraExtensions\ModuleComponents\Model\Config\Source\Select\VirtualSelect">
         <arguments>
-            <argument name="key" xsi:type="string">match_types</argument>
+            <argument name="data" xsi:type="array">
+                <item name="equal" xsi:type="string">Is Equal To</item>
+                <item name="not_equal" xsi:type="string">Is Not Equal To</item>
+                <item name="contains" xsi:type="string">Contains</item>
+                <item name="not_contains" xsi:type="string">Does Not Contain</item>
+                <item name="regex_match" xsi:type="string">Matches Regex</item>
+                <item name="not_regex_match" xsi:type="string">Does Not Match Regex</item>
+            </argument>
         </arguments>
     </virtualType>
 </config>

@@ -4,24 +4,22 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Model\Data
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Model\Data;
 
-use AuroraExtensions\SimpleRedirects\{
-    Api\Data\RuleInterface,
-    Model\ResourceModel\Rule as RuleResourceModel
-};
+use AuroraExtensions\SimpleRedirects\Api\Data\RuleInterface;
+use AuroraExtensions\SimpleRedirects\Model\ResourceModel\Rule as RuleResource;
 use Magento\Framework\Model\AbstractModel;
 
 class Rule extends AbstractModel implements RuleInterface
@@ -31,7 +29,7 @@ class Rule extends AbstractModel implements RuleInterface
      */
     public function _construct()
     {
-        $this->_init(RuleResourceModel::class);
+        $this->_init(RuleResource::class);
     }
 
     /**
@@ -111,10 +109,7 @@ class Rule extends AbstractModel implements RuleInterface
      */
     public function getParentId(): ?int
     {
-        /** @var int $parentId */
-        $parentId = (int) $this->getData('parent_id');
-
-        return $parentId ?: null;
+        return (int) $this->getData('parent_id') ?: null;
     }
 
     /**

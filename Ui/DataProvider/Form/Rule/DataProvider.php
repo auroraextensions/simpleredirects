@@ -4,64 +4,61 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Ui\DataProvider\Form\Rule
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Ui\DataProvider\Form\Rule;
 
+use AuroraExtensions\ModuleComponents\Component\Ui\DataProvider\Modifier\ModifierPoolTrait;
+use AuroraExtensions\SimpleRedirects\Model\ResourceModel\Rule\Collection;
+use AuroraExtensions\SimpleRedirects\Model\ResourceModel\Rule\CollectionFactory;
 use Countable;
-use AuroraExtensions\SimpleRedirects\{
-    Component\Ui\DataProvider\Modifier\ModifierPoolTrait,
-    Model\ResourceModel\Rule\Collection,
-    Model\ResourceModel\Rule\CollectionFactory
-};
-use Magento\Framework\{
-    Api\FilterBuilder,
-    Api\Search\SearchCriteria,
-    Api\Search\SearchCriteriaBuilder,
-    Api\Search\SearchResultInterface,
-    App\RequestInterface,
-    View\Element\UiComponent\DataProvider\DataProviderInterface
-};
-use Magento\Ui\{
-    DataProvider\AbstractDataProvider,
-    DataProvider\Modifier\ModifierInterface,
-    DataProvider\Modifier\PoolInterface
-};
+use Magento\Framework\Api\FilterBuilder;
+use Magento\Framework\Api\Search\SearchCriteria;
+use Magento\Framework\Api\Search\SearchCriteriaBuilder;
+use Magento\Framework\Api\Search\SearchResultInterface;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface;
+use Magento\Ui\DataProvider\AbstractDataProvider;
+use Magento\Ui\DataProvider\Modifier\ModifierInterface;
+use Magento\Ui\DataProvider\Modifier\PoolInterface;
+
+use function sprintf;
+use function str_replace;
+use function strtolower;
 
 class DataProvider extends AbstractDataProvider implements
-    Countable,
-    DataProviderInterface
+    DataProviderInterface,
+    Countable
 {
     /**
-     * @property PoolInterface $modifierPool
+     * @var PoolInterface $modifierPool
      * @method PoolInterface getModifierPool()
      * @method ModifierInterface[] getModifiers()
      */
     use ModifierPoolTrait;
 
-    /** @constant string WILDCARD */
     public const WILDCARD = '*';
 
-    /** @property FilterBuilder $filterBuilder */
+    /** @var array $cache */
+    private $cache = [];
+
+    /** @var FilterBuilder $filterBuilder */
     protected $filterBuilder;
 
-    /** @property array $loadedData */
-    protected $loadedData = [];
-
-    /** @property RequestInterface $request */
+    /** @var RequestInterface $request */
     protected $request;
 
-    /** @property SearchCriteriaBuilder $searchCriteriaBuilder */
+    /** @var SearchCriteriaBuilder $searchCriteriaBuilder */
     protected $searchCriteriaBuilder;
 
     /**
@@ -107,18 +104,17 @@ class DataProvider extends AbstractDataProvider implements
     /**
      * @return void
      */
-    public function prepareSubmitUrl(): void
+    private function prepareSubmitUrl(): void
     {
         if (isset($this->data['config']['submit_url'])) {
-            $this->parseSubmitUrl();
+            $this->buildSubmitUrl();
         }
 
         if (isset($this->data['config']['filter_url_params'])) {
             /** @var string $field */
             /** @var mixed $value */
             foreach ($this->data['config']['filter_url_params'] as $field => $value) {
-                $value = $value !== static::WILDCARD
-                    ? (string) $value
+                $value = $value !== static::WILDCARD ? (string) $value
                     : $this->request->getParam($field);
 
                 if ($value) {
@@ -145,14 +141,13 @@ class DataProvider extends AbstractDataProvider implements
     /**
      * @return void
      */
-    private function parseSubmitUrl(): void
+    private function buildSubmitUrl(): void
     {
         /** @var string $actionName */
         $actionName = strtolower($this->request->getActionName()) . 'Post';
 
         /** @var string $submitUrl */
         $submitUrl = $this->data['config']['submit_url'];
-
         $this->data['config']['submit_url'] = str_replace(
             ':action',
             $actionName,
@@ -168,11 +163,8 @@ class DataProvider extends AbstractDataProvider implements
         /** @var array $meta */
         $meta = parent::getMeta();
 
-        /** @var ModifierInterface[] $modifiers */
-        $modifiers = $this->getModifiers();
-
         /** @var ModifierInterface $modifier */
-        foreach ($modifiers as $modifier) {
+        foreach ($this->getModifiers() as $modifier) {
             $meta = $modifier->modifyMeta($meta);
         }
 
@@ -184,8 +176,8 @@ class DataProvider extends AbstractDataProvider implements
      */
     public function getData(): array
     {
-        if (!empty($this->loadedData)) {
-            return $this->loadedData;
+        if (!empty($this->cache)) {
+            return $this->cache;
         }
 
         /** @var RuleInterface[] $items */
@@ -193,17 +185,14 @@ class DataProvider extends AbstractDataProvider implements
 
         /** @var RuleInterface $rule */
         foreach ($items as $rule) {
-            $this->loadedData[$rule->getId()] = $rule->getData();
+            $this->cache[$rule->getId()] = $rule->getData();
         }
-
-        /** @var ModifierInterface[] $modifiers */
-        $modifiers = $this->getModifiers();
 
         /** @var ModifierInterface $modifier */
-        foreach ($modifiers as $modifier) {
-            $this->loadedData = $modifier->modifyData($this->loadedData);
+        foreach ($this->getModifiers() as $modifier) {
+            $this->cache = $modifier->modifyData($this->cache);
         }
 
-        return $this->loadedData;
+        return $this->cache;
     }
 }

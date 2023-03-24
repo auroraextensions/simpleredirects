@@ -4,15 +4,15 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Ui\Component\Control
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
@@ -20,9 +20,11 @@ namespace AuroraExtensions\SimpleRedirects\Ui\Component\Control;
 
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
+use function array_replace_recursive;
+
 class SaveButton implements ButtonProviderInterface
 {
-    /** @property array $components */
+    /** @var array $components */
     private $components = [
         'button' => ['event' => 'save'],
     ];
@@ -34,7 +36,7 @@ class SaveButton implements ButtonProviderInterface
     public function __construct(
         array $components = []
     ) {
-        $this->components = $this->getMergeData(
+        $this->components = array_replace_recursive(
             $this->components,
             $components
         );
@@ -55,25 +57,5 @@ class SaveButton implements ButtonProviderInterface
             'on_click' => '',
             'sort_order' => 10,
         ];
-    }
-
-    /**
-     * @param array[] ...$components
-     * @return array
-     */
-    private function getMergeData(array ...$components): array
-    {
-        /** @var array $result */
-        $result = [];
-
-        /** @var array $component */
-        foreach ($components as $component) {
-            $result = array_replace_recursive(
-                $result,
-                $component
-            );
-        }
-
-        return $result;
     }
 }

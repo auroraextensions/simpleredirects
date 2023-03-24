@@ -4,31 +4,29 @@
  *
  * NOTICE OF LICENSE
  *
- * This source file is subject to the MIT License, which
+ * This source file is subject to the MIT license, which
  * is bundled with this package in the file LICENSE.txt.
  *
  * It is also available on the Internet at the following URL:
  * https://docs.auroraextensions.com/magento/extensions/2.x/simpleredirects/LICENSE.txt
  *
- * @package       AuroraExtensions_SimpleRedirects
- * @copyright     Copyright (C) 2020 Aurora Extensions <support@auroraextensions.com>
- * @license       MIT License
+ * @package     AuroraExtensions\SimpleRedirects\Ui\Component\Control
+ * @copyright   Copyright (C) 2023 Aurora Extensions <support@auroraextensions.com>
+ * @license     MIT
  */
 declare(strict_types=1);
 
 namespace AuroraExtensions\SimpleRedirects\Ui\Component\Control;
 
-use Magento\Framework\{
-    UrlInterface,
-    View\Element\UiComponent\Control\ButtonProviderInterface
-};
+use Magento\Framework\UrlInterface;
+use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
 
 class CancelButton implements ButtonProviderInterface
 {
-    /** @property string $route */
+    /** @var string $route */
     private $route;
 
-    /** @property UrlInterface $urlBuilder */
+    /** @var UrlInterface $urlBuilder */
     private $urlBuilder;
 
     /**
@@ -65,11 +63,8 @@ class CancelButton implements ButtonProviderInterface
         /** @var string $targetUrl */
         $targetUrl = $this->urlBuilder->getUrl(
             $this->route,
-            [
-                '_secure' => true,
-            ]
+            ['_secure' => true]
         );
-
         return "(function(){window.location='{$targetUrl}';})();";
     }
 }
