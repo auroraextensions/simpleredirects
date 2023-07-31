@@ -53,38 +53,38 @@ class DataProvider extends AbstractDataProvider implements
     private $cache = [];
 
     /** @var FilterBuilder $filterBuilder */
-    protected $filterBuilder;
+    private $filterBuilder;
 
     /** @var RequestInterface $request */
-    protected $request;
+    private $request;
 
     /** @var SearchCriteriaBuilder $searchCriteriaBuilder */
-    protected $searchCriteriaBuilder;
+    private $searchCriteriaBuilder;
 
     /**
      * @param string $name
      * @param string $primaryFieldName
      * @param string $requestFieldName
-     * @param array $meta
-     * @param array $data
      * @param CollectionFactory $collectionFactory
      * @param FilterBuilder $filterBuilder
      * @param PoolInterface $modifierPool
      * @param RequestInterface $request
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param array $meta
+     * @param array $data
      * @return void
      */
     public function __construct(
         $name,
         $primaryFieldName,
         $requestFieldName,
-        array $meta = [],
-        array $data = [],
         CollectionFactory $collectionFactory,
         FilterBuilder $filterBuilder,
         PoolInterface $modifierPool,
         RequestInterface $request,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        array $meta = [],
+        array $data = []
     ) {
         parent::__construct(
             $name,

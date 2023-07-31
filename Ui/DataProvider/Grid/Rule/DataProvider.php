@@ -41,22 +41,22 @@ class DataProvider extends AbstractDataProvider implements
      * @param string $name
      * @param string $primaryFieldName
      * @param string $requestFieldName
-     * @param array $meta
-     * @param array $data
+     * @param CollectionFactory $collectionFactory
      * @param AddFieldToCollectionInterface[] $addFieldStrategies
      * @param AddFilterToCollectionInterface[] $addFilterStrategies
-     * @param CollectionFactory $collectionFactory
+     * @param array $meta
+     * @param array $data
      * @return void
      */
     public function __construct(
         $name,
         $primaryFieldName,
         $requestFieldName,
-        array $meta = [],
-        array $data = [],
+        CollectionFactory $collectionFactory,
         array $addFieldStrategies = [],
         array $addFilterStrategies = [],
-        CollectionFactory $collectionFactory
+        array $meta = [],
+        array $data = []
     ) {
         parent::__construct(
             $name,
@@ -65,9 +65,9 @@ class DataProvider extends AbstractDataProvider implements
             $meta,
             $data
         );
+        $this->collection = $collectionFactory->create();
         $this->addFieldStrategies = $addFieldStrategies;
         $this->addFilterStrategies = $addFilterStrategies;
-        $this->collection = $collectionFactory->create();
     }
 
     /**
@@ -81,11 +81,13 @@ class DataProvider extends AbstractDataProvider implements
     /**
      * {@inheritdoc}
      */
-    public function addField($field, $alias = null)
-    {
+    public function addField(
+        $field,
+        $alias = null
+    ) {
         if (isset($this->addFieldStrategies[$field])) {
             $this->addFieldStrategies[$field]
-                ->addField($this->getCollection(), $field, $alias);
+                 ->addField($this->getCollection(), $field, $alias);
         } else {
             parent::addField($field, $alias);
         }
@@ -101,7 +103,7 @@ class DataProvider extends AbstractDataProvider implements
 
         if (isset($this->addFilterStrategies[$field])) {
             $this->addFilterStrategies[$field]
-                ->addFilter(
+                 ->addFilter(
                     $this->getCollection(),
                     $field,
                     [$filter->getConditionType() => $filter->getValue()]
